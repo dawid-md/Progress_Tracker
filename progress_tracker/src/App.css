@@ -5,6 +5,10 @@
 .App{
     height: 100%;
 }
+.project_control{
+    display: flex;
+    gap: 3px;
+}
 .progressBar{
     display: flex;
     justify-content: space-between;
@@ -13,6 +17,10 @@
     border: 1px solid #0d6efd;
     border-radius: 10px;
     overflow: hidden;
+    margin-top: 5px;
+}
+.edit, .delete{
+    height: 25px;
     margin-top: 5px;
 }
 .completed{

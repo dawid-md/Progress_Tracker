@@ -12,7 +12,7 @@ function App() {
 
   useEffect(() => {
     getProjects();
-  }, []); // The empty array [] means this effect runs once on mount
+  }, []);
 
   async function getProjects(){
     const db = getDatabase()
@@ -21,7 +21,7 @@ function App() {
       const snapshot = await get(openingsRef)
       if(snapshot.exists()) {
         const data = snapshot.val()
-        console.log(data);
+        //console.log(data);
         const projectsArray = Object.keys(data).map(key => ({
           id: key,
           ...data[key]
@@ -48,10 +48,22 @@ function App() {
     }
   }
 
+  async function deleteProject(projectId) {
+    const db = getDatabase(app);
+    const projectRef = ref(db, projectId);
+    try {
+      await remove(projectRef);
+      console.log("Project deleted");
+      getProjects();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <div className="App">
       <div className="container">
-        {projects.map(item => <Project key={item.id} name={item.name} completed={item.progress} units={item.units} />)}
+        {projects.map(item => <Project key={item.id} id={item.id} name={item.name} completed={item.progress} units={item.units} deleteProject={deleteProject} />)}
         <button onClick={() => setShowAddProject(!showAddProject)}>Add New Project</button>
         {showAddProject && (
           <div>
