@@ -9,14 +9,20 @@
     display: flex;
     justify-content: space-between;
     width: 600px;
-    height: 40px;
+    height: 35px;
+    border: 1px solid #0d6efd;
     border-radius: 10px;
     overflow: hidden;
 }
-.unit{
+.completed{
     flex-grow: 1;
     background-color: #0d6efd;
     border: 1px solid #84b5ff61;
+}
+.unit{
+    flex-grow: 1;
+    background-color: #ffffff;
+    border: 1px solid #ffffff;
 }
 /* .unit:first-child{
     border-top-left-radius: 10px;
