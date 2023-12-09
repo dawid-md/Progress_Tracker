@@ -1,5 +1,5 @@
 import './App.css';
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Project from './Project';
 import { getDatabase, ref, get, push, remove, update } from 'firebase/database'
 import { app } from './Config/firebase';
@@ -7,8 +7,14 @@ import { app } from './Config/firebase';
 function App() {
   const [units, setunits] = useState([60, 100])
   const [projects, setprojects] = useState([])
+  const [newProject, setNewProject] = useState({ name: '', progress: '', units: '' });
+  const [showAddProject, setShowAddProject] = useState(false);
 
-  async function getProjectss(){
+  useEffect(() => {
+    getProjects();
+  }, []); // The empty array [] means this effect runs once on mount
+
+  async function getProjects(){
     const db = getDatabase()
     const openingsRef = ref(db)
     try{
@@ -29,35 +35,48 @@ function App() {
     }
   }
 
-  async function saveProject(){
-    const db = getDatabase();
-    const projectsRef = ref(db);
-    //if(comment.commentID == ""){
-      try {
-        await push(projectsRef, {name: "react-native course", progress: "20", units: "120"});
-        console.log("project saved");
-      } catch (error) {
-        console.log(error);
-      }
-    // } else {    //update comment
-    //   const specificCommentRef = ref(db, `Comments/${comment.commentID}`);
-    //   try {
-    //     await update(specificCommentRef, { "comment": comment.comment });
-    //     console.log("comment updated");
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // }
-    //loadComment();
+  async function saveProject() {
+    const db = getDatabase(app);
+    const projectsRef = ref(db); 
+    try {
+      await push(projectsRef, newProject);
+      console.log("Project saved");
+      setNewProject({ name: '', progress: '', units: '' }); //Reset input fields after saving
+      getProjects(); //Refresh list of projects
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
     <div className="App">
       <div className="container">
-        {projects.map(item => <Project key={item.key} name={item.name} completed={item.progress} units={item.units} /> )}
-        {/* <Project units={units}/> */}
-        <button onClick={getProjectss}>Get Projects</button>
-        <button onClick={saveProject}>Save Project</button>
+        {projects.map(item => <Project key={item.id} name={item.name} completed={item.progress} units={item.units} />)}
+        <button onClick={() => setShowAddProject(!showAddProject)}>Add New Project</button>
+        {showAddProject && (
+          <div>
+            <input 
+              type="text" 
+              placeholder="Name" 
+              value={newProject.name} 
+              onChange={e => setNewProject({ ...newProject, name: e.target.value })}
+            />
+            <input 
+              type="text" 
+              placeholder="Progress" 
+              value={newProject.progress} 
+              onChange={e => setNewProject({ ...newProject, progress: e.target.value })}
+            />
+            <input 
+              type="text" 
+              placeholder="Units" 
+              value={newProject.units} 
+              onChange={e => setNewProject({ ...newProject, units: e.target.value })}
+            />
+            <button onClick={saveProject}>Save Project</button>
+          </div>
+        )}
+        {/* <button onClick={getProjects}>Get Projects</button> */}
       </div>
     </div>
   );
