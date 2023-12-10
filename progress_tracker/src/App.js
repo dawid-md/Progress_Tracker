@@ -3,12 +3,15 @@ import { useState, useEffect } from "react"
 import Project from './Project';
 import { getDatabase, ref, get, push, remove, update } from 'firebase/database'
 import { app } from './Config/firebase';
+import ModalDelete from './ModalDelete';
 
 function App() {
   const [projects, setprojects] = useState([])
   const [newProject, setNewProject] = useState({ name: '', progress: '', units: '' });
   const [editingProjectId, setEditingProjectId] = useState(null);
   const [showAddProject, setShowAddProject] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [projectToDelete, setProjectToDelete] = useState(null);
 
   useEffect(() => {
     getProjects();
@@ -62,10 +65,15 @@ function App() {
         console.log(error);
       }
     }
-    setNewProject({ name: '', progress: '', units: '' }); // Reset input fields after saving
-    setEditingProjectId(null); // Reset editing ID
-    setShowAddProject(false); // Hide input fields
-    getProjects(); // Refresh list of projects
+    setNewProject({ name: '', progress: '', units: '' }); //Reset input fields after saving
+    setEditingProjectId(null); //Reset editing ID
+    setShowAddProject(false); //Hide input fields
+    getProjects(); //Refresh list of projects
+  }
+
+  function confirmDeleteProject(project) {
+    setProjectToDelete(project);
+    setShowDeleteModal(true);
   }
 
   async function deleteProject(projectId) {
@@ -78,10 +86,13 @@ function App() {
     } catch (error) {
       console.log(error);
     }
+    setShowDeleteModal(false); // Hide the modal after deletion
+    setProjectToDelete(null); // Reset the project to delete
   }
 
   return (
     <div className="App">
+      <div className="navbar"></div>
       <div className="container">
         {projects.map(item => (
           <Project
@@ -90,8 +101,8 @@ function App() {
             name={item.name}
             completed={item.progress}
             units={item.units}
-            deleteProject={deleteProject}
             editProject={editProject}
+            deleteProject={() => confirmDeleteProject(item)}
           />
         ))}
         <button onClick={() => setShowAddProject(!showAddProject)}>Add New Project</button>
@@ -119,6 +130,11 @@ function App() {
           </div>
         )}
         {/* <button onClick={getProjects}>Get Projects</button> */}
+        <ModalDelete
+          isOpen={showDeleteModal}
+          onConfirm={deleteProject}
+          onCancel={() => setShowDeleteModal(false)}
+        />
       </div>
     </div>
   );
