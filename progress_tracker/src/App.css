@@ -8,6 +8,7 @@
 .project_control{
     display: flex;
     gap: 3px;
+    margin-bottom: 8px;
 }
 .progressBar{
     display: flex;
@@ -17,7 +18,7 @@
     border: 1px solid #0d6efd;
     border-radius: 10px;
     overflow: hidden;
-    margin-top: 5px;
+    margin: 5px 0px;
 }
 .edit, .delete{
     height: 25px;
