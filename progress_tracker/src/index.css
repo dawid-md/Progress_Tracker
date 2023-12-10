@@ -14,11 +14,11 @@
 }
 
 body{
-  min-height: 100vh;
+  min-height: 100dvh;
   height: 100vh;
   width: 100%;
-  background-color: #23272f;
-  color: rgba(255, 255, 255, 0.955);
+  background-color: #1a1d23;
+  color: #f6f7f9;
 }
 #root{
   height: 100%;

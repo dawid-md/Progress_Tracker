@@ -4,6 +4,8 @@ import Project from './Project';
 import { getDatabase, ref, get, push, remove, update } from 'firebase/database'
 import { app } from './Config/firebase';
 import ModalDelete from './ModalDelete';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 
 function App() {
   const [projects, setprojects] = useState([])
@@ -76,9 +78,9 @@ function App() {
     setShowDeleteModal(true);
   }
 
-  async function deleteProject(projectId) {
+  async function deleteProject() {
     const db = getDatabase(app);
-    const projectRef = ref(db, projectId);
+    const projectRef = ref(db, projectToDelete.id);
     try {
       await remove(projectRef);
       console.log("Project deleted");
@@ -92,8 +94,12 @@ function App() {
 
   return (
     <div className="App">
-      <div className="navbar"></div>
+      <div className="navbar">
+        <img className='img-logo' src='/logo192.png'></img>
+        <h1>Progress Tracker</h1>
+      </div>
       <div className="container">
+      <FontAwesomeIcon className='add-icon' icon={faCirclePlus} onClick={() => setShowAddProject(!showAddProject)} />
         {projects.map(item => (
           <Project
             key={item.id}
@@ -102,7 +108,7 @@ function App() {
             completed={item.progress}
             units={item.units}
             editProject={editProject}
-            deleteProject={() => confirmDeleteProject(item)}
+            deleteProjectClick={() => confirmDeleteProject(item)}
           />
         ))}
         <button onClick={() => setShowAddProject(!showAddProject)}>Add New Project</button>

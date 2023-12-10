@@ -1,7 +1,17 @@
 .navbar{
     width: 100%;
-    height: 50px;
-    background-color: black;
+    height: 80px;
+    background: linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(26,29,35,1) 100%);
+    color: #61dafb;
+    padding: 5px 10px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.img-logo{
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
 }
 .container{
     display: grid;
@@ -11,20 +21,32 @@
 .App{
     height: 100%;
 }
+.project_data{
+    width: 1000px;
+    min-width: 500px;
+    margin-bottom: 15px;
+}
 .project_control{
     display: flex;
     gap: 3px;
-    margin-bottom: 8px;
 }
 .progressBar{
     display: flex;
     justify-content: space-between;
-    width: 900px;
+    width: 900px; /* Full width of its parent */
+    min-width: 400px; /* Minimum width */
     height: 25px;
     border: 1px solid #0d6efd;
     border-radius: 10px;
     overflow: hidden;
     margin: 5px 0px;
+}
+.add-icon{
+    height: 45px;
+}
+.add-icon:hover{
+    cursor: pointer;
+    color: antiquewhite;
 }
 .icon-edit, .icon-delete{
     height: 25px;
@@ -60,13 +82,48 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
 }
 .modal-content {
-    background: white;
+    background-color: #23272f;
     padding: 20px;
-    border-radius: 5px;
+    border: 1px solid #149eca;
+    border-radius: 10px;
+}
+.modal-content-buttons{
+    padding: 20px 20px 0px 20px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.confirm-button, .cancel-button{
+    width: 60px;
+    height: 35px;
+    border-radius: 10px;
+    text-align: center;
+    line-height: 2rem;
+}
+.confirm-button{
+    background-color: #0d6efd;
+}
+.cancel-button{
+    background-color: #4e545d32;
+}
+.confirm-button:hover, .cancel-button:hover{
+    cursor: pointer;
+    font-weight: 500;
+    outline: 1px solid #149eca;
+}
+
+@media (max-width: 1020px) {
+    .project_data {
+        max-width: 700px; /* Adjusted min-width for smaller screens */
+    }
+}
+@media (max-width: 810px) {
+    .project_data {
+        max-width: 500px; /* Adjusted min-width for smaller screens */
+    }
 }

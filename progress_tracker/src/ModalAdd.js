@@ -1,5 +1,8 @@
-export default function ModalDelete({ isOpen, onConfirm, onCancel }) {
+import { useState } from "react";
+
+export default function ModalAdd({ isOpen, onConfirm, onCancel }) {
     if (!isOpen) return null;
+    const [newProject, setNewProject] = useState({ name: '', progress: '', units: '' });
   
     return (
       <div className="modal">
