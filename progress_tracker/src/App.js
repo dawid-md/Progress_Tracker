@@ -3,15 +3,17 @@ import { useState, useEffect } from "react"
 import Project from './Project';
 import { getDatabase, ref, get, push, remove, update } from 'firebase/database'
 import { app } from './Config/firebase';
-import ModalDelete from './ModalDelete';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
+import ModalAdd from './ModalAdd';
+import ModalEdit from './ModalEdit';
+import ModalDelete from './ModalDelete';
 
 function App() {
   const [projects, setprojects] = useState([])
   const [newProject, setNewProject] = useState({ name: '', progress: '', units: '' });
   const [editingProjectId, setEditingProjectId] = useState(null);
-  const [showAddProject, setShowAddProject] = useState(false);
+  const [showAddModal, setShowAddModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [projectToDelete, setProjectToDelete] = useState(null);
 
@@ -40,20 +42,21 @@ function App() {
     }
   }
 
-  function editProject(project) {
+  function editProject(project) { //triggered by edit icon
     setNewProject({ name: project.name, progress: project.completed, units: project.units });
     setEditingProjectId(project.id);
-    setShowAddProject(true); 
+    //setShowAddModal(true); 
   }
 
-  async function saveProject() {
+  async function saveProject(project) {
+    console.log(project);
     const db = getDatabase(app);
     let projectsRef;
 
-    if (editingProjectId) {
-      projectsRef = ref(db, editingProjectId);
+    if (project.id) {
+      projectsRef = ref(db, project.id);
       try {
-        await update(projectsRef, newProject);
+        await update(projectsRef, project);
         console.log("Project updated");
       } catch (error) {
         console.log(error);
@@ -61,7 +64,7 @@ function App() {
     } else {
       projectsRef = ref(db);
       try {
-        await push(projectsRef, newProject);
+        await push(projectsRef, project);
         console.log("Project saved");
       } catch (error) {
         console.log(error);
@@ -69,7 +72,7 @@ function App() {
     }
     setNewProject({ name: '', progress: '', units: '' }); //Reset input fields after saving
     setEditingProjectId(null); //Reset editing ID
-    setShowAddProject(false); //Hide input fields
+    setShowAddModal(false); //Hide input fields
     getProjects(); //Refresh list of projects
   }
 
@@ -99,7 +102,7 @@ function App() {
         <h1>Progress Tracker</h1>
       </div>
       <div className="container">
-      <FontAwesomeIcon className='add-icon' icon={faCirclePlus} onClick={() => setShowAddProject(!showAddProject)} />
+      <FontAwesomeIcon className='add-icon' icon={faCirclePlus} onClick={() => setShowAddModal(!showAddModal)} />
         {projects.map(item => (
           <Project
             key={item.id}
@@ -111,31 +114,18 @@ function App() {
             deleteProjectClick={() => confirmDeleteProject(item)}
           />
         ))}
-        <button onClick={() => setShowAddProject(!showAddProject)}>Add New Project</button>
-        {showAddProject && (
-          <div>
-            <input 
-              type="text" 
-              placeholder="Name" 
-              value={newProject.name} 
-              onChange={e => setNewProject({ ...newProject, name: e.target.value })}
-            />
-            <input 
-              type="number" 
-              placeholder="Progress" 
-              value={newProject.progress} 
-              onChange={e => setNewProject({ ...newProject, progress: e.target.value })}
-            />
-            <input 
-              type="number" 
-              placeholder="Units" 
-              value={newProject.units} 
-              onChange={e => setNewProject({ ...newProject, units: e.target.value })}
-            />
-            <button onClick={saveProject}>Save Project</button>
-          </div>
-        )}
-        {/* <button onClick={getProjects}>Get Projects</button> */}
+        {/* <button onClick={() => setShowAddModal(!showAddModal)}>Add New Project</button> */}
+        <ModalAdd 
+          isOpen={showAddModal}
+          onConfirm={saveProject}
+          onCancel={() => setShowAddModal(false)}
+        />
+        <ModalEdit
+          editingProjectId={editingProjectId}
+          onConfirm={saveProject}
+          onCancel={() => setEditingProjectId(null)}
+          projectData={newProject}
+        />
         <ModalDelete
           isOpen={showDeleteModal}
           onConfirm={deleteProject}
