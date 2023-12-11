@@ -19,20 +19,23 @@ export default function ModalEdit({ editingProjectId, onConfirm, onCancel , proj
   return (
     <div className="modal">
       <div className="modal-content">
-        <h3>Edit project</h3>
-        <div>
+        <h2 className="modal-label">Edit project</h2>
+        <div className="modal-fields">
+          <p className="label">Name</p>
           <input 
             type="text" 
             placeholder="Name" 
             value={newProject.name} 
             onChange={e => setNewProject({ ...newProject, name: e.target.value })}
           />
+          <p className="label">Progress</p>
           <input 
             type="number" 
             placeholder="Progress" 
             value={newProject.progress} 
             onChange={e => setNewProject({ ...newProject, progress: e.target.value })}
           />
+          <p className="label">Units</p>
           <input 
             type="number" 
             placeholder="Units" 
