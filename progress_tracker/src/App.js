@@ -11,7 +11,7 @@ import ModalDelete from './ModalDelete';
 
 function App() {
   const [projects, setprojects] = useState([])
-  const [newProject, setNewProject] = useState({ name: '', progress: '', units: '' });
+  const [updatedProject, setUpdatedProject] = useState({ name: '', progress: '', units: '', url: '' });
   const [editingProjectId, setEditingProjectId] = useState(null);
   const [showAddModal, setShowAddModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -43,13 +43,12 @@ function App() {
   }
 
   function editProject(project) { //triggered by edit icon
-    setNewProject({ name: project.name, progress: project.completed, units: project.units });
+    setUpdatedProject({ name: project.name, progress: project.completed, units: project.units, url: project.url });
     setEditingProjectId(project.id);
-    //setShowAddModal(true); 
   }
 
   async function saveProject(project) {
-    console.log(project);
+    //console.log(project);
     const db = getDatabase(app);
     let projectsRef;
 
@@ -70,7 +69,7 @@ function App() {
         console.log(error);
       }
     }
-    setNewProject({ name: '', progress: '', units: '' }); //Reset input fields after saving
+    setUpdatedProject({ name: '', progress: '', units: '', url: '' }); //Reset input fields after saving
     setEditingProjectId(null); //Reset editing ID
     setShowAddModal(false); //Hide input fields
     getProjects(); //Refresh list of projects
@@ -110,6 +109,7 @@ function App() {
             name={item.name}
             completed={item.progress}
             units={item.units}
+            url={item.url}
             editProject={editProject}
             deleteProjectClick={() => confirmDeleteProject(item)}
           />
@@ -124,7 +124,7 @@ function App() {
           editingProjectId={editingProjectId}
           onConfirm={saveProject}
           onCancel={() => setEditingProjectId(null)}
-          projectData={newProject}
+          projectData={updatedProject}
         />
         <ModalDelete
           isOpen={showDeleteModal}

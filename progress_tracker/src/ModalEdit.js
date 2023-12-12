@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 
 export default function ModalEdit({ editingProjectId, onConfirm, onCancel , projectData}) {
-  const [newProject, setNewProject] = useState({id: editingProjectId, name: projectData.name, progress: projectData.progress, units: projectData.units });
+  const [newProject, setNewProject] = useState({id: editingProjectId, name: projectData.name, progress: projectData.progress,
+     units: projectData.units, url: projectData.url });
 
   useEffect(() => {
     if (editingProjectId) {
@@ -9,7 +10,8 @@ export default function ModalEdit({ editingProjectId, onConfirm, onCancel , proj
         id: editingProjectId,
         name: projectData.name,
         progress: projectData.progress,
-        units: projectData.units
+        units: projectData.units,
+        url: projectData.url
       });
     }
   }, [editingProjectId, projectData]);
@@ -41,6 +43,13 @@ export default function ModalEdit({ editingProjectId, onConfirm, onCancel , proj
             placeholder="Units" 
             value={newProject.units} 
             onChange={e => setNewProject({ ...newProject, units: e.target.value })}
+          />
+          <p className="label">URL</p>
+          <input 
+            type="text" 
+            placeholder="URL" 
+            value={newProject.url} 
+            onChange={e => setNewProject({ ...newProject, url: e.target.value })}
           />
           {/* <button onClick={saveProject}>Save Project</button> */}
         </div>

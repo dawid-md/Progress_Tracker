@@ -95,7 +95,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between; /* This will space out the children */
-    height: 360px;
+    height: 420px;
     width: 500px;
     background-color: #23272f;
     padding: 20px;
@@ -111,28 +111,30 @@
     flex-direction: column;
 }
 .modal-fields input{
-    background-color: #0a0a23;
-    border: 1px solid #0a0a23;
+    background-color: #16181d;
+    border: 1px solid #16181d;
     color: #ffffff;
     font-size: 1.1rem;
-    padding: 2px;
+    padding: 3px;
     margin-top: 5px;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
 }
 .modal-content-buttons {
     flex-grow: 1;
-    padding: 20px 20px 0px 20px;
+    /* padding: 20px 20px 0px 20px; */
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 25px;
 }
 .confirm-button, .cancel-button{
-    width: 60px;
-    height: 35px;
+    width: 80px;
+    height: 40px;
+    font-size: large;
     border-radius: 10px;
-    text-align: center;
-    line-height: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .confirm-button{
     background-color: #0d6efd;
@@ -146,12 +148,12 @@
     outline: 1px solid #149eca;
 }
 
-@media (max-width: 1020px) {
+@media (max-width: 1200px) {
     .project_data {
-        max-width: 700px; /* Adjusted min-width for smaller screens */
+        max-width: 900px; /* Adjusted min-width for smaller screens */
     }
 }
-@media (max-width: 810px) {
+@media (max-width: 960px) {
     .project_data {
         max-width: 500px; /* Adjusted min-width for smaller screens */
     }
