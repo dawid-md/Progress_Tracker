@@ -22,9 +22,11 @@
     height: 100%;
 }
 .project_data{
-    width: 1100px;
-    min-width: 500px;
+    /* width: 1100px; */
+    /* min-width: 500px; */
     margin-bottom: 15px;
+    display: grid;
+    grid-template-columns: minmax(400px, auto);
 }
 .project_control{
     display: flex;
@@ -33,8 +35,8 @@
 .progressBar{
     display: flex;
     justify-content: space-between;
-    width: 1000px; /* Full width of its parent */
-    min-width: 400px; /* Minimum width */
+    width: 1000px; 
+    min-width: 400px;
     height: 25px;
     border: 1px solid #0d6efd;
     border-radius: 10px;
@@ -92,9 +94,9 @@
     background-color: rgba(0, 0, 0, 0.3);
 }
 .modal-content {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between; /* This will space out the children */
+    display: grid;
+    /* flex-direction: column; */
+    /* justify-content: space-between; */
     height: 420px;
     width: 500px;
     background-color: #23272f;
@@ -148,13 +150,13 @@
     outline: 1px solid #149eca;
 }
 
-@media (max-width: 1200px) {
+/* @media (max-width: 1200px) {
     .project_data {
-        max-width: 900px; /* Adjusted min-width for smaller screens */
+        max-width: 900px;
     }
 }
 @media (max-width: 960px) {
     .project_data {
-        max-width: 500px; /* Adjusted min-width for smaller screens */
+        max-width: 500px;
     }
-}
+} */
