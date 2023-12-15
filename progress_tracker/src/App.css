@@ -22,11 +22,11 @@
     height: 100%;
 }
 .project_data{
-    /* width: 1100px; */
-    /* min-width: 500px; */
     margin-bottom: 15px;
     display: grid;
     grid-template-columns: minmax(400px, auto);
+    padding-left: 5px;
+    padding-right: 5px;
 }
 .project_control{
     display: flex;
@@ -95,9 +95,8 @@
 }
 .modal-content {
     display: grid;
-    /* flex-direction: column; */
-    /* justify-content: space-between; */
-    height: 420px;
+    /* height: 420px; */
+    /* grid-template-rows: minmax(00px, auto); */
     width: 500px;
     background-color: #23272f;
     padding: 20px;
@@ -128,6 +127,7 @@
     justify-content: center;
     align-items: center;
     gap: 25px;
+    margin-top: 15px;
 }
 .confirm-button, .cancel-button{
     width: 80px;
