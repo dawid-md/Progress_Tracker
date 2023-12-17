@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
+import { AuthContext } from "../App";
 import Project from '../components/Project';
 import { getDatabase, ref, get, push, remove, update } from 'firebase/database'
 import { app } from '../config/firebase';
@@ -9,6 +10,7 @@ import ModalEdit from '../components/ModalEdit';
 import ModalDelete from '../components/ModalDelete';
 
 function Home() {
+  const { user } = useContext(AuthContext)
   const [projects, setprojects] = useState([])
   const [updatedProject, setUpdatedProject] = useState({ name: '', progress: '', units: '', url: '' });
   const [editingProjectId, setEditingProjectId] = useState(null);
@@ -17,8 +19,8 @@ function Home() {
   const [projectToDelete, setProjectToDelete] = useState(null);
 
   useEffect(() => {
-    getProjects();
-  }, []);
+    user && getProjects();
+  }, [user]);
 
   async function getProjects(){
     const db = getDatabase()

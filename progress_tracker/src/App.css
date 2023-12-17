@@ -48,6 +48,9 @@
     transform-origin: left center;
     transition-duration: 0.4s;
 }
+.nav-link:hover{
+    cursor: pointer;
+}
 .container{
     display: grid;
     place-items: center;
