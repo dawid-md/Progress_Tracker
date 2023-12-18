@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faCircleInfo, faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faCircleInfo, faEdit, faTrashAlt, faUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
 
 export default function Project({id, name, completed, units, url, deleteProjectClick, editProject}){
     return(
@@ -18,7 +18,7 @@ export default function Project({id, name, completed, units, url, deleteProjectC
           </div>
           <FontAwesomeIcon className="icon-edit" icon={faEdit} onClick={() => editProject({id, name, completed, units, url})} />
           <FontAwesomeIcon className="icon-delete" icon={faTrashAlt} onClick={() => deleteProjectClick()} />
-          <FontAwesomeIcon className="icon-info" icon={faCircleInfo} />
+          <FontAwesomeIcon className="icon-info" icon={faUpRightFromSquare} onClick={() => window.open(`${url}`, '_blank')} />
         </div>
       </div>
     )

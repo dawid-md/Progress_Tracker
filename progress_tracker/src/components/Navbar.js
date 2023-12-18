@@ -5,7 +5,6 @@ import { auth } from "../config/firebase"; // Ensure this path is correct
 import { useContext } from "react";
 import { AuthContext } from "../App";
 
-
 export default function Navbar() {
   const {user} = useContext(AuthContext)
   const navigate = useNavigate();
@@ -26,7 +25,7 @@ export default function Navbar() {
               <img className='logo' src='/logo192.png' alt='React Application'/>
               <h1>Progress Tracker</h1>
           </div>
-          <h2>{user.displayName}</h2>
+          {user && <h2>{user.displayName}</h2>}
           <nav className='nav-links'>
               <Link to={'/'} className='nav-link'>Home</Link>
               {!user && <Link to={'/register'} className='nav-link'>Register</Link> }
