@@ -29,7 +29,7 @@ export default function Navbar() {
               <Link to={'/'} className='nav-link'>Home</Link>
               {!user && <Link to={'/register'} className='nav-link'>Register</Link> }
               {!user && <Link to={'/login'} className='nav-link'>Login</Link> }
-              <div onClick={handleLogout} className='nav-link'>Logout</div> {/* Changed to button */}
+              {user && <div onClick={handleLogout} className='nav-link'>Logout</div>} {/* Changed to button */}
               <Link to={'/about'} className='nav-link'>About</Link>
           </nav>
       </div>

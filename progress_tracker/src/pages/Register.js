@@ -40,7 +40,7 @@ export default function Register(){
                 <form className="loginForm" onSubmit={handleSubmit(onSubmit)}>
 
                     <div className="form-field">
-                        <input type="text" placeholder="Full Name..." {...register("name")} />
+                        <input type="text" placeholder="Name..." {...register("name")} />
                         <div className="error-message">{errors.name && <p>{errors.name.message}</p>}</div>
                     </div>
 
