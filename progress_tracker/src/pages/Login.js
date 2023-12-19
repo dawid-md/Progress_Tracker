@@ -45,7 +45,9 @@ export default function Login() {
                 </div>
 
                 <button className="loginButton" type="submit">Continue</button>
+                
             </form>
+            <button className="testUserButton" onClick={() => onSubmit({email:'maddawid.91@gmail.com', password:'caps12'})}>Log in as Test User</button>
         </div>
     );
 }
