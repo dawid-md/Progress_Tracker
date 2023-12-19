@@ -6,8 +6,10 @@ import { useNavigate } from "react-router-dom";
 import { auth } from "../config/firebase"; // Ensure this path is correct
 
 const schema = yup.object().shape({
-    email: yup.string().email('Email must be a valid').required('Email is required'),
-    password: yup.string().required('Password is required'),
+    email: yup.string().email('Email must be valid').required('Email is required'),
+    password: yup.string()
+                 .required('Password is required')
+                 .min(6, 'Password must be at least 6 characters long'), // Add this line
 });
 
 export default function Login() {
@@ -20,27 +22,30 @@ export default function Login() {
         try {
             const userCredential = await signInWithEmailAndPassword(auth, formData.email, formData.password);
             console.log("User logged in", userCredential);
-            navigate('/'); // Redirect to home or dashboard as needed
+            navigate('/'); //Redirect to home
         } catch (error) {
             const errorCode = error.code;
             const errorMessage = error.message;
             console.log("Login error", errorCode, errorMessage);
-            // Optionally set an error state and display it to the user
         }
     };
 
     return (
-        <>
-            <div className="loginDiv">Log in to your account</div>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <input type="text" placeholder="Email..." {...register("email")} />
-                {errors.email && <p>{errors.email.message}</p>}
+        <div className="loginDiv">
+            <h1>Hi, wanna sign in?</h1>
+            <form className="loginForm" onSubmit={handleSubmit(onSubmit)}>
+                <div className="form-field">
+                    <input type="text" placeholder="Email..." {...register("email")} />
+                    <div className="error-message">{errors.email && <p>{errors.email.message}</p>}</div>
+                </div>
 
-                <input type="password" placeholder="Password..." {...register("password")} />
-                {errors.password && <p>{errors.password.message}</p>}
+                <div className="form-field">
+                    <input type="password" placeholder="Password..." {...register("password")} />
+                    <div className="error-message">{errors.password && <p>{errors.password.message}</p>}</div>
+                </div>
 
-                <input type="submit" value="Log In" />
+                <button className="loginButton" type="submit">Continue</button>
             </form>
-        </>
+        </div>
     );
 }

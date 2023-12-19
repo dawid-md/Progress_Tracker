@@ -17,8 +17,8 @@ export default function Project({id, name, completed, units, url, deleteProjectC
             ))}
           </div>
           <FontAwesomeIcon className="icon-edit" icon={faEdit} onClick={() => editProject({id, name, completed, units, url})} />
-          <FontAwesomeIcon className="icon-delete" icon={faTrashAlt} onClick={() => deleteProjectClick()} />
           <FontAwesomeIcon className="icon-info" icon={faUpRightFromSquare} onClick={() => window.open(`${url}`, '_blank')} />
+          <FontAwesomeIcon className="icon-delete" icon={faTrashAlt} onClick={() => deleteProjectClick()} />
         </div>
       </div>
     )
