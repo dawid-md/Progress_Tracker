@@ -1,11 +1,14 @@
 import { Link, useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import { auth } from "../config/firebase"; // Ensure this path is correct
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../App";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
 
 export default function Navbar() {
   const {user} = useContext(AuthContext)
+  const [theme, setTheme] = useState('dark')
   const navigate = useNavigate();
 
   const handleLogout = async () => {
@@ -17,6 +20,10 @@ export default function Navbar() {
           console.error("Error signing out: ", error);
       }
   };
+
+  const changeTheme = () => {
+    console.log('theme changed');
+  }
 
   return (
       <div className="navbar">
@@ -32,6 +39,10 @@ export default function Navbar() {
               {user && <div onClick={handleLogout} className='nav-link'>Logout</div>} {/* Changed to button */}
               <Link to={'/about'} className='nav-link'>About</Link>
           </nav>
+          {theme === 'dark' ? <FontAwesomeIcon className="icon-delete" icon={faSun} onClick={() => changeTheme()} /> : 
+                <FontAwesomeIcon className="" icon={faMoon} onClick={() => changeTheme()} />
+          }
+
       </div>
   );
 }
