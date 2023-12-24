@@ -1,15 +1,26 @@
 import { Link, useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import { auth } from "../config/firebase"; // Ensure this path is correct
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../App";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
 
 export default function Navbar() {
   const {user} = useContext(AuthContext)
-  const [theme, setTheme] = useState('dark')
+  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark');
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (theme === 'dark') {
+      root.style.setProperty('--background', '#1a1d23'); //Dark theme color
+      localStorage.setItem('theme', 'dark');
+    } else {
+      root.style.setProperty('--background', 'gray'); //Light theme color
+      localStorage.setItem('theme', 'light');
+    }
+  }, [theme]);
 
   const handleLogout = async () => {
       try {
@@ -22,8 +33,9 @@ export default function Navbar() {
   };
 
   const changeTheme = () => {
+    setTheme(prevTheme => prevTheme === 'dark' ? 'light' : 'dark');
     console.log('theme changed');
-  }
+  };
 
   return (
       <div className="navbar">
@@ -32,6 +44,7 @@ export default function Navbar() {
               <h1>Progress Tracker</h1>
           </div>
           {user && <h2>{user.displayName}</h2>}
+          <div className="flex-elements">
           <nav className='nav-links'>
               <Link to={'/'} className='nav-link'>Home</Link>
               {!user && <Link to={'/register'} className='nav-link'>Register</Link> }
@@ -39,9 +52,10 @@ export default function Navbar() {
               {user && <div onClick={handleLogout} className='nav-link'>Logout</div>} {/* Changed to button */}
               <Link to={'/about'} className='nav-link'>About</Link>
           </nav>
-          {theme === 'dark' ? <FontAwesomeIcon className="icon-delete" icon={faSun} onClick={() => changeTheme()} /> : 
-                <FontAwesomeIcon className="" icon={faMoon} onClick={() => changeTheme()} />
+          {theme === 'dark' ? <FontAwesomeIcon className="icon-theme" icon={faSun} onClick={() => changeTheme()} /> : 
+                <FontAwesomeIcon className="icon-theme" icon={faMoon} onClick={() => changeTheme()} />
           }
+          </div>
 
       </div>
   );

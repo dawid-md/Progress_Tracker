@@ -57,6 +57,23 @@
 .nav-link:hover{
     cursor: pointer;
 }
+
+.flex-elements{
+    display: flex;
+    align-items: center;
+}
+
+.icon-theme{
+    color: white;
+    width: 20px;
+    height: 20px;
+    margin-left: 5px;
+}
+
+.icon-theme:hover{
+    cursor: pointer;
+}
+
 .container{
     display: grid;
     place-items: center;

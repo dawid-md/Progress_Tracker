@@ -13,11 +13,15 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+:root{
+  --background: #1a1d23;
+}
+
 body{
   min-height: 100dvh;
   height: 100vh;
   width: 100%;
-  background-color: #1a1d23;
+  background-color: var(--background);
   color: #f6f7f9;
   font-family: 'Roboto', sans-serif;
 }
