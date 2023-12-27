@@ -97,7 +97,7 @@
 .progressBar{
     display: flex;
     justify-content: space-between;
-    width: 1000px; 
+    width: 1200px; 
     min-width: 400px;
     height: 25px;
     border: 1px solid var(--blue-primary);
@@ -269,4 +269,23 @@
     color: red;
     font-size: 0.8rem;
     margin-top: 2px;
-  }
+}
+
+@media screen and (max-width: 1400px){
+    .project_data{
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}
+
+@media screen and (max-width: 800px){
+    .logo{
+        display: none;
+    }
+    .logo-title{
+        font-size: 0.8rem;
+    }
+    .navbar{
+        padding: 5px 5px;
+    }
+}
