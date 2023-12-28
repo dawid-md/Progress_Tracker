@@ -282,10 +282,13 @@
     .logo{
         display: none;
     }
+    .nav-username{
+        display: none;
+    }
     .logo-title{
         font-size: 0.8rem;
     }
     .navbar{
-        padding: 5px 5px;
+        padding: 10px 10px;
     }
 }

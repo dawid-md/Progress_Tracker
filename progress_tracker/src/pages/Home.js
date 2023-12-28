@@ -22,28 +22,27 @@ function Home() {
     user && getProjects();
   }, [user]);
 
-async function getProjects() {
-  const db = getDatabase();
-  // Create a reference to the 'projects' node and query for the specific userId
-  const projectsRef = query(ref(db), orderByChild('userID'), equalTo(user.uid));
-  
-  try {
-    const snapshot = await get(projectsRef);
-    if (snapshot.exists()) {
-      const data = snapshot.val();
-      // Convert the data into an array of projects
-      const userProjectsArray = Object.keys(data).map(key => ({
-        id: key,
-        ...data[key]
-      }));
-      setprojects(userProjectsArray); // Assuming setProjects is your state setter
-    } else {
-      console.log("No data available");
+  async function getProjects() {
+    const db = getDatabase();
+    const projectsRef = query(ref(db), orderByChild('userID'), equalTo(user.uid));
+    
+    try {
+      const snapshot = await get(projectsRef);
+      if (snapshot.exists()) {
+        const data = snapshot.val();
+        //Convert the data into an array of projects
+        const userProjectsArray = Object.keys(data).map(key => ({
+          id: key,
+          ...data[key]
+        }));
+        setprojects(userProjectsArray);
+      } else {
+        console.log("No data available");
+      }
+    } catch (error) {
+      console.error(error);
     }
-  } catch (error) {
-    console.error(error);
   }
-}
 
   function editProject(project) { //triggered by edit icon
     setUpdatedProject({ name: project.name, progress: project.completed, units: project.units, url: project.url });
@@ -97,8 +96,17 @@ async function getProjects() {
     setProjectToDelete(null); // Reset the project to delete
   }
 
+  const sortProjects = () => {
+    const sortedProjects = [...projects].sort((a, b) => {
+      return (a.progress / a.units) - (b.progress / b.units);
+    });
+    console.log(sortedProjects);
+    setprojects(sortedProjects);
+  };
+  
   return (
       <div className="container">
+    <button className="sort" onClick={sortProjects}>Sort Em</button>
       <FontAwesomeIcon className='add-icon' icon={faCirclePlus} onClick={() => setShowAddModal(!showAddModal)} />
         {projects.map(item => (
           <Project

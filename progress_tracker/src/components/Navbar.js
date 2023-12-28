@@ -43,7 +43,7 @@ export default function Navbar() {
               <img className='logo' src='/logo192.png' alt='React Application'/>
               <h1>Progress Tracker</h1>
           </div>
-          {user && <h2>{user.displayName}</h2>}
+          {user && <h2 className="nav-username">{user.displayName}</h2>}
           <div className="flex-elements">
           <nav className='nav-links'>
               <Link to={'/'} className='nav-link'>Home</Link>
