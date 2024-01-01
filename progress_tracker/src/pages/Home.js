@@ -4,22 +4,24 @@ import Project from '../components/Project';
 import { getDatabase, ref, get, push, remove, update, query, orderByChild, equalTo } from 'firebase/database'
 import { app } from '../config/firebase';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
+import { faCirclePlus, faSort } from '@fortawesome/free-solid-svg-icons';
 import ModalAdd from '../components/ModalAdd';
 import ModalEdit from '../components/ModalEdit';
 import ModalDelete from '../components/ModalDelete';
 
 function Home() {
-  const { user } = useContext(AuthContext)
+  const {user} = useContext(AuthContext)
   const [projects, setprojects] = useState([])
   const [updatedProject, setUpdatedProject] = useState({ name: '', progress: '', units: '', url: '' });
   const [editingProjectId, setEditingProjectId] = useState(null);
   const [showAddModal, setShowAddModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [projectToDelete, setProjectToDelete] = useState(null);
+  const [sorting, setSorting] = useState(null)
 
   useEffect(() => {
     user && getProjects();
+    console.log("rendered");
   }, [user]);
 
   async function getProjects() {
@@ -97,17 +99,24 @@ function Home() {
   }
 
   const sortProjects = () => {
+
     const sortedProjects = [...projects].sort((a, b) => {
-      return (a.progress / a.units) - (b.progress / b.units);
+      if(!sorting || sorting === "descending"){
+        setSorting("ascending")
+        return (a.progress / a.units) - (b.progress / b.units);
+      }
+      setSorting("descending")
+      return (b.progress / b.units) - (a.progress / a.units);
     });
-    console.log(sortedProjects);
     setprojects(sortedProjects);
   };
   
   return (
       <div className="container">
-    <button className="sort" onClick={sortProjects}>Sort Em</button>
-      <FontAwesomeIcon className='add-icon' icon={faCirclePlus} onClick={() => setShowAddModal(!showAddModal)} />
+      <div className="icons">
+        <FontAwesomeIcon className='add-icon' icon={faCirclePlus} onClick={() => setShowAddModal(!showAddModal)} />
+        <FontAwesomeIcon className='add-icon' icon={faSort} onClick={sortProjects} />
+      </div>
         {projects.map(item => (
           <Project
             key={item.id}
