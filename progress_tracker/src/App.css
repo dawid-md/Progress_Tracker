@@ -1,13 +1,18 @@
 :root {
+    --background: #1a1d23;
     --react-color: #61dafb;
     --blue-primary: #0d6efd;
     --orange--firebase: #FFC209;
+    --projects--font--color: #fff;
+    --gradient--start: rgba(0,0,0,1);
+    --gradient--end: rgba(26,29,35,1);
+    --icons--color: #F6F7F9;
+    --project--data--background: #1a1d23;  /*#e0e0e0*/
   }
-
 .navbar{
     width: 100%;
     height: 80px;
-    background: linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(26,29,35,1) 100%);
+    background: linear-gradient(180deg, var(--gradient--start) 0%, var(--gradient--end) 100%);
     color: #61dafb;
     padding: 5px 100px;
     display: flex;
@@ -20,6 +25,8 @@
     display: flex;
     align-items: center;
     gap: 20px; 
+    font-size: clamp(0.5rem, 0.5rem + 1vw, 1.5rem);
+    letter-spacing: 2px;
 }
 .logo{
     max-width: 100%;
@@ -62,7 +69,6 @@
     display: flex;
     align-items: center;
 }
-
 .icons{
     display: flex;
     justify-content: center;
@@ -70,18 +76,15 @@
     padding: 20px;
     gap: 15px;
 }
-
 .icon-theme{
     color: white;
     width: 20px;
     height: 20px;
     margin-left: 5px;
 }
-
 .icon-theme:hover{
     cursor: pointer;
 }
-
 .container{
     display: grid;
     place-items: center;
@@ -90,12 +93,16 @@
 .App{
     height: 100%;
 }
+.project_name{
+    color: var(--projects--font--color);
+}
 .project_data{
     margin-bottom: 15px;
     display: grid;
     grid-template-columns: minmax(400px, auto);
-    padding-left: 5px;
-    padding-right: 5px;
+    padding: 5px 10px;
+    background-color: var(--project--data--background);
+    border-radius: 10px;
     /* color: #61dafb;  Color of project labels*/
 }
 .project_control{
@@ -115,6 +122,7 @@
 }
 .add-icon, .sort-icon{
     height: 45px;
+    color: var(--icons--color);
 }
 .add-icon:hover, .sort-icon:hover{
     cursor: pointer;
@@ -285,15 +293,18 @@
     }
 }
 
+@media screen and (max-width: 1000px){
+    .navbar{
+        padding: 20px;
+    }
+}
+
 @media screen and (max-width: 800px){
     .logo{
         display: none;
     }
     .nav-username{
         display: none;
-    }
-    .logo-title{
-        font-size: 0.8rem;
     }
     .navbar{
         padding: 10px 10px;

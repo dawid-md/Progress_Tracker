@@ -15,9 +15,19 @@ export default function Navbar() {
     const root = document.documentElement;
     if (theme === 'dark') {
       root.style.setProperty('--background', '#1a1d23'); //Dark theme color
+      root.style.setProperty('--gradient--start', 'rgba(0,0,0,1)')
+      root.style.setProperty('--gradient--end', 'rgba(26,29,35,1)')
+      root.style.setProperty('--project--data--background', '#1a1d23');  //#e0e0e0#F6F7F9
+      root.style.setProperty('--projects--font--color', '#fff');
+      root.style.setProperty('--icons--color', '#F6F7F9');
       localStorage.setItem('theme', 'dark');
     } else {
-      root.style.setProperty('--background', 'gray'); //Light theme color
+      root.style.setProperty('--background', '#F0F1F3'); //Light theme color
+      root.style.setProperty('--gradient--start', 'black')
+      root.style.setProperty('--gradient--end', '#F0F1F3')
+      root.style.setProperty('--project--data--background', '#e0e0e0');
+      root.style.setProperty('--projects--font--color', '#0B0D10');
+      root.style.setProperty('--icons--color', 'gray');
       localStorage.setItem('theme', 'light');
     }
   }, [theme]);
@@ -34,14 +44,13 @@ export default function Navbar() {
 
   const changeTheme = () => {
     setTheme(prevTheme => prevTheme === 'dark' ? 'light' : 'dark');
-    console.log('theme changed');
   };
 
   return (
       <div className="navbar">
           <div className="logo-title">
               <img className='logo' src='/logo192.png' alt='React Application'/>
-              <h1>Progress Tracker</h1>
+              <h2>Progress Tracker</h2>
           </div>
           {user && <h2 className="nav-username">{user.displayName}</h2>}
           <div className="flex-elements">
@@ -50,6 +59,7 @@ export default function Navbar() {
               {!user && <Link to={'/register'} className='nav-link'>Register</Link> }
               {!user && <Link to={'/login'} className='nav-link'>Login</Link> }
               {user && <div onClick={handleLogout} className='nav-link'>Logout</div>} {/* Changed to button */}
+              {user && <div className='nav-link'>Profile</div>} {/* Changed to button */}
               <Link to={'/about'} className='nav-link'>About</Link>
           </nav>
           {theme === 'dark' ? <FontAwesomeIcon className="icon-theme" icon={faSun} onClick={() => changeTheme()} /> : 
