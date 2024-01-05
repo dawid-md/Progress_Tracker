@@ -27,7 +27,6 @@ function Home() {
   async function getProjects() {
     const db = getDatabase();
     const projectsRef = query(ref(db), orderByChild('userID'), equalTo(user.uid));
-    
     try {
       const snapshot = await get(projectsRef);
       if (snapshot.exists()) {
@@ -37,7 +36,11 @@ function Home() {
           id: key,
           ...data[key]
         }));
-        setprojects(userProjectsArray);
+        if(sorting){
+          sortProjects(userProjectsArray)
+        } else{
+          setprojects(userProjectsArray)
+        }
       } else {
         console.log("No data available");
       }
@@ -98,9 +101,8 @@ function Home() {
     setProjectToDelete(null); // Reset the project to delete
   }
 
-  const sortProjects = () => {
-
-    const sortedProjects = [...projects].sort((a, b) => {
+  const sortProjects = (projectsToSort) => {
+    const sortedProjects = [...projectsToSort].sort((a, b) => {
       if(!sorting || sorting === "descending"){
         setSorting("ascending")
         return (a.progress / a.units) - (b.progress / b.units);
@@ -109,13 +111,13 @@ function Home() {
       return (b.progress / b.units) - (a.progress / a.units);
     });
     setprojects(sortedProjects);
-  };
+  }
   
   return (
       <div className="container">
       <div className="icons">
         <FontAwesomeIcon className='add-icon' icon={faCirclePlus} onClick={() => setShowAddModal(!showAddModal)} />
-        <FontAwesomeIcon className='add-icon' icon={faSort} onClick={sortProjects} />
+        <FontAwesomeIcon className='add-icon' icon={faSort} onClick={() => sortProjects(projects)} />
       </div>
         {projects.map(item => (
           <Project
