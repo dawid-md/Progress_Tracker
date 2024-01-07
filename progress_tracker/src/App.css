@@ -14,11 +14,11 @@
     height: 80px;
     background: linear-gradient(180deg, var(--gradient--start) 0%, var(--gradient--end) 100%);
     color: #61dafb;
-    padding: 5px 100px;
+    padding: 12px 100px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 20px;
+    gap: 30px;
 }
 .logo-title {
     height: 100%;
@@ -32,6 +32,11 @@
     max-width: 100%;
     max-height: 100%;
     object-fit: cover;
+}
+.nav-username{
+    margin-left: auto;
+    position: relative;
+    top: -1px;
 }
 .nav-links{
     display: flex;

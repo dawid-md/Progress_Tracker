@@ -13,10 +13,6 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-:root{
-  --background: #1a1d23;
-}
-
 body{
   min-height: 100dvh;
   height: 100vh;
