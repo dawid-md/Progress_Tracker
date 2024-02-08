@@ -118,7 +118,7 @@
     display: flex;
     justify-content: space-between;
     width: 1200px; 
-    min-width: 400px;
+    min-width: 330px;
     height: 25px;
     border: 1px solid var(--blue-primary);
     border-radius: 10px;
