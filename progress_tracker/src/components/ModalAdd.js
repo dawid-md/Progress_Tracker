@@ -1,14 +1,14 @@
 import { useState } from "react";
 
-export default function ModalAdd({ isOpen, onConfirm, onCancel }) {
-  const [newProject, setNewProject] = useState({ name: '', progress: '', units: '', url: '' });
+export default function ModalAdd({ isOpen, onConfirm, onCancel, parentID }) {
+  const [newProject, setNewProject] = useState({ name: '', progress: '', units: '', url: '', parentID: parentID })
 
     if (!isOpen) return null;
 
     return (
       <div className="modal">
         <div className="modal-content">
-          <h2 className="modal-label">New project</h2>
+          {parentID ? <h2 className="modal-label">New sub-project</h2> : <h2 className="modal-label">New project</h2>}
           <div className="modal-fields">
             <input 
               type="text" 
@@ -40,7 +40,7 @@ export default function ModalAdd({ isOpen, onConfirm, onCancel }) {
           <div className="modal-content-buttons">
             <div className="confirm-button" onClick={() => {
                 onConfirm(newProject)
-                setNewProject({ name: '', progress: '', units: '', url: '' })}
+                setNewProject({ name: '', progress: '', units: '', url: '', parentID: null })}
               }>Save</div>
             <div className="cancel-button" onClick={onCancel}>Cancel</div>
           </div>

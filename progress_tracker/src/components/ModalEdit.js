@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-export default function ModalEdit({ editingProjectId, onConfirm, onCancel , projectData}) {
+export default function ModalEdit({ editingProjectId, showAddModal, onConfirm, onCancel , projectData}) {
   const [newProject, setNewProject] = useState({id: editingProjectId, name: projectData.name, progress: projectData.progress,
      units: projectData.units, url: projectData.url });
 

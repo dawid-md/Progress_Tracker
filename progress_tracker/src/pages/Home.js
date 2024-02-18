@@ -11,12 +11,12 @@ import ModalDelete from '../components/ModalDelete';
 
 function Home() {
   const {user} = useContext(AuthContext)
-  const [projects, setprojects] = useState([])
-  const [updatedProject, setUpdatedProject] = useState({ name: '', progress: '', units: '', url: '' });
-  const [editingProjectId, setEditingProjectId] = useState(null);
-  const [showAddModal, setShowAddModal] = useState(false);
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [projectToDelete, setProjectToDelete] = useState(null);
+  const [projects, setProjects] = useState([])
+  const [updatedProject, setUpdatedProject] = useState({ name: '', progress: '', units: '', url: '' })
+  const [editingProjectId, setEditingProjectId] = useState(null)
+  const [showAddModal, setShowAddModal] = useState(false)
+  const [showDeleteModal, setShowDeleteModal] = useState(false)
+  const [projectToDelete, setProjectToDelete] = useState(null)
   const [sorting, setSorting] = useState(null)
 
   useEffect(() => {
@@ -39,7 +39,7 @@ function Home() {
         if(sorting){
           sortProjects(userProjectsArray)
         } else{
-          setprojects(userProjectsArray)
+          setProjects(userProjectsArray)
         }
       } else {
         console.log("No data available");
@@ -50,8 +50,13 @@ function Home() {
   }
 
   function editProject(project) { //triggered by edit icon
-    setUpdatedProject({ name: project.name, progress: project.completed, units: project.units, url: project.url });
-    setEditingProjectId(project.id);
+    setUpdatedProject({ name: project.name, progress: project.completed, units: project.units, url: project.url })
+    setEditingProjectId(project.id)
+  }
+
+  function addSubProject(projectID) {
+    setShowAddModal(true)
+    setEditingProjectId(projectID)
   }
 
   async function saveProject(project) {
@@ -110,7 +115,7 @@ function Home() {
       setSorting("descending")
       return (b.progress / b.units) - (a.progress / a.units);
     });
-    setprojects(sortedProjects);
+    setProjects(sortedProjects);
   }
   
   return (
@@ -122,26 +127,31 @@ function Home() {
         {projects.map(item => (
           <Project
             key={item.id}
-            id={item.id}
+            // id={item.id}
             name={item.name}
             completed={item.progress}
             units={item.units}
             url={item.url}
-            editProject={editProject}
+            editProject={() => editProject({id: item.id, name: item.name, completed: item.completed, units: item.units, url: item.url})}
             deleteProjectClick={() => confirmDeleteProject(item)}
+            addSubProject={() => addSubProject(item.id)}
           />
         ))}
         <ModalAdd 
           isOpen={showAddModal}
           onConfirm={saveProject}
-          onCancel={() => setShowAddModal(false)}
+          onCancel={() => {
+            setShowAddModal(false)
+            setEditingProjectId(null)
+          }}
+          parentID={editingProjectId}
         />
-        <ModalEdit
+        {!showAddModal && <ModalEdit
           editingProjectId={editingProjectId}
           onConfirm={saveProject}
           onCancel={() => setEditingProjectId(null)}
           projectData={updatedProject}
-        />
+        />}
         <ModalDelete
           isOpen={showDeleteModal}
           onConfirm={deleteProject}
