@@ -1,7 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function ModalAdd({ isOpen, onConfirm, onCancel, parentID }) {
   const [newProject, setNewProject] = useState({ name: '', progress: '', units: '', url: '', parentID: parentID })
+    
+    useEffect(() => {
+      setNewProject(currentProject => ({ ...currentProject, parentID }))
+    }, [parentID])
 
     if (!isOpen) return null;
 
@@ -40,7 +44,8 @@ export default function ModalAdd({ isOpen, onConfirm, onCancel, parentID }) {
           <div className="modal-content-buttons">
             <div className="confirm-button" onClick={() => {
                 onConfirm(newProject)
-                setNewProject({ name: '', progress: '', units: '', url: '', parentID: null })}
+                setNewProject({ name: '', progress: '', units: '', url: '', parentID: null })
+              }
               }>Save</div>
             <div className="cancel-button" onClick={onCancel}>Cancel</div>
           </div>

@@ -26,16 +26,19 @@ function Home() {
 
   async function getProjects() {
     const db = getDatabase();
-    const projectsRef = query(ref(db), orderByChild('userID'), equalTo(user.uid));
+    const projectsRef = query(ref(db), orderByChild('userID'), equalTo(user.uid))
     try {
-      const snapshot = await get(projectsRef);
+      const snapshot = await get(projectsRef)
       if (snapshot.exists()) {
-        const data = snapshot.val();
+        const data = snapshot.val()
         //Convert the data into an array of projects
-        const userProjectsArray = Object.keys(data).map(key => ({
-          id: key,
-          ...data[key]
-        }));
+        const userProjectsArray = Object.keys(data).map(key => {
+              return{
+                id: key,
+                ...data[key]
+              }
+        }).filter(item => item !== null) //removing nulls from the array
+        //console.log(userProjectsArray);
         if(sorting){
           sortProjects(userProjectsArray)
         } else{
@@ -45,12 +48,12 @@ function Home() {
         console.log("No data available");
       }
     } catch (error) {
-      console.error(error);
+      console.error(error)
     }
   }
 
   function editProject(project) { //triggered by edit icon
-    setUpdatedProject({ name: project.name, progress: project.completed, units: project.units, url: project.url })
+    setUpdatedProject({ name: project.name, progress: project.progress, units: project.units, url: project.url })
     setEditingProjectId(project.id)
   }
 
@@ -60,6 +63,7 @@ function Home() {
   }
 
   async function saveProject(project) {
+    console.log(project);
     const db = getDatabase(app);
     let projectsRef;
 
@@ -125,16 +129,13 @@ function Home() {
         <FontAwesomeIcon className='add-icon' icon={faSort} onClick={() => sortProjects(projects)} />
       </div>
         {projects.map(item => (
-          <Project
+          item.parentID === undefined && <Project
             key={item.id}
-            // id={item.id}
-            name={item.name}
-            completed={item.progress}
-            units={item.units}
-            url={item.url}
-            editProject={() => editProject({id: item.id, name: item.name, completed: item.completed, units: item.units, url: item.url})}
+            id={item.id}
+            editProject={() => editProject({id: item.id, name: item.name, progress: item.progress, units: item.units, url: item.url})}
             deleteProjectClick={() => confirmDeleteProject(item)}
-            addSubProject={() => addSubProject(item.id)}
+            addSubProject={addSubProject}
+            projects={projects}
           />
         ))}
         <ModalAdd 
