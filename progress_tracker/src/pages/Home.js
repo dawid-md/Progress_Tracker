@@ -129,11 +129,11 @@ function Home() {
         <FontAwesomeIcon className='add-icon' icon={faSort} onClick={() => sortProjects(projects)} />
       </div>
         {projects.map(item => (
-          item.parentID === undefined && <Project
+          item.parentID === undefined && <Project //first render can only contains items without parentID (they are subprojects)
             key={item.id}
             id={item.id}
-            editProject={() => editProject({id: item.id, name: item.name, progress: item.progress, units: item.units, url: item.url})}
-            deleteProjectClick={() => confirmDeleteProject(item)}
+            editProject={editProject}
+            confirmDeleteProject={confirmDeleteProject}
             addSubProject={addSubProject}
             projects={projects}
           />
