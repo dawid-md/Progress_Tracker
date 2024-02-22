@@ -5,15 +5,15 @@ import { useEffect, useState } from "react";
 export default function Project({id, confirmDeleteProject, editProject, addSubProject, projects}){
 
   const [project, setProject] = useState(null)
-  const [subprojects, setSubprojects] = useState(null)
-  const [isVisible, setIsVisible] = useState(project?.parentID)
+  const [subprojects, setSubprojects] = useState([])
+  const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {
     const foundProject = projects.find(project => project.id === id)
     setProject(foundProject)
     const foundSubprojects = projects.filter(project => project.parentID === id)
     setSubprojects(foundSubprojects)
-  }, [id, projects, isVisible])
+  }, [id, projects])
 
   if(!project) {
     return <div>Loading project...</div>
@@ -24,9 +24,7 @@ export default function Project({id, confirmDeleteProject, editProject, addSubPr
   }
 
   return(
-    <>
-    <FontAwesomeIcon className="icon-toggle" icon={isVisible ? faChevronUp : faChevronDown} onClick={toggleSubprojectsVisibility} />
-    <div className={`project_data ${project.parentID ? 'hidden' : ''}`}> 
+    <div className={"project_data"}> 
       <h2 className="project_name">{project.name}</h2>
       <div className="project_control">
         <div className="progressBar">
@@ -42,7 +40,8 @@ export default function Project({id, confirmDeleteProject, editProject, addSubPr
         <FontAwesomeIcon className="icon-delete" icon={faTrashAlt} onClick={() => confirmDeleteProject(project)} />
         <FontAwesomeIcon className="icon-edit" icon={faCirclePlus} onClick={() => addSubProject(project.id)} />
       </div>
-      {subprojects && <div className="subprojects">
+      <FontAwesomeIcon className={`icon-toggle ${subprojects.find(project => project.parentID === id) ? '' : 'hidden'}`} icon={isVisible ? faChevronUp : faChevronDown} onClick={toggleSubprojectsVisibility} />
+      {subprojects && <div className={`subprojects ${!isVisible ? 'hidden' : ''}`}>
         {subprojects.map(subProject => (
           <Project 
             key={subProject.id} 
@@ -55,6 +54,5 @@ export default function Project({id, confirmDeleteProject, editProject, addSubPr
         ))}
       </div>}
     </div>
-    </>
   )
 }

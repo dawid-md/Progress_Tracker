@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react"
+import { useState, useEffect, useContext, useCallback } from "react"
 import { AuthContext } from "../App";
 import Project from '../components/Project';
 import { getDatabase, ref, get, push, remove, update, query, orderByChild, equalTo } from 'firebase/database'
@@ -52,10 +52,10 @@ function Home() {
     }
   }
 
-  function editProject(project) { //triggered by edit icon
+  const editProject = useCallback((project) => { //triggered by edit icon
     setUpdatedProject({ name: project.name, progress: project.progress, units: project.units, url: project.url })
     setEditingProjectId(project.id)
-  }
+  }, [])
 
   function addSubProject(projectID) {
     setShowAddModal(true)
@@ -129,7 +129,7 @@ function Home() {
         <FontAwesomeIcon className='add-icon' icon={faSort} onClick={() => sortProjects(projects)} />
       </div>
         {projects.map(item => (
-          item.parentID === undefined && <Project //first render can only contains items without parentID (they are subprojects)
+          item.parentID === undefined && <Project //first render can only contains items without parentID (parentID is for subprojects)
             key={item.id}
             id={item.id}
             editProject={editProject}
