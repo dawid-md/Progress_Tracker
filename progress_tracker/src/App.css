@@ -106,10 +106,8 @@
     margin-bottom: 15px;
     display: grid;
     grid-template-columns: minmax(400px, auto);
-    /* padding: 5px 10px; */
     background-color: var(--project--data--background);
     border-radius: 10px;
-    /* color: #61dafb;  Color of project labels*/
 }
 .subprojects{
     width: 99%;
@@ -306,7 +304,7 @@
 }
 
 @media screen and (max-width: 1400px){
-    .project_data{
+    .container > .project_data{
         padding-left: 20px;
         padding-right: 20px;
     }

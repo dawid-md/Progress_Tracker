@@ -20,8 +20,8 @@ function Home() {
   const [sorting, setSorting] = useState(null)
 
   useEffect(() => {
-    user && getProjects();
-    console.log("rendered");
+    user && getProjects()
+    console.log("rendered")
   }, [user]);
 
   async function getProjects() {
@@ -32,13 +32,15 @@ function Home() {
       if (snapshot.exists()) {
         const data = snapshot.val()
         //Convert the data into an array of projects
-        const userProjectsArray = Object.keys(data).map(key => {
+        let userProjectsArray = Object.keys(data).map(key => {
               return{
                 id: key,
                 ...data[key]
               }
         }).filter(item => item !== null) //removing nulls from the array
-        //console.log(userProjectsArray);
+
+        userProjectsArray = calculateProgress(userProjectsArray)
+
         if(sorting){
           sortProjects(userProjectsArray)
         } else{
@@ -51,6 +53,52 @@ function Home() {
       console.error(error)
     }
   }
+
+  const calculateProgress = (userProjectsArray) => {
+    let calculatedProjects = {}
+    userProjectsArray.forEach(item => {
+      item.calculatedProgress = {progress: {}, counter: 0}
+      item.finalProgress = item.progress / item.units
+      calculatedProjects[item.id] = item
+    })
+    calculate(calculatedProjects)
+    return userProjectsArray
+  }
+
+  const calculate = (calculatedProjects, parentID = null) => {
+    if(parentID){
+      let parID = calculatedProjects[parentID].parentID
+      if(calculatedProjects[parID].calculatedProgress.progress[parentID] != undefined){
+        calculatedProjects[parID].calculatedProgress.progress[parentID] = calculatedProjects[parentID].finalProgress
+        calculatedProjects[parID].finalProgress = 0
+        Object.keys(calculatedProjects[parID].calculatedProgress.progress).forEach(val => {
+          calculatedProjects[parID].finalProgress += calculatedProjects[parID].calculatedProgress.progress[val]
+        })
+        if(calculatedProjects[parID].parentID){
+          calculate(calculatedProjects, parID)
+        }
+      }
+    } else {
+      Object.keys(calculatedProjects).forEach(item => {
+          let parID = calculatedProjects[item].parentID
+          if(parID){
+              calculatedProjects[parID].calculatedProgress.progress[item] = calculatedProjects[item].finalProgress
+              calculatedProjects[parID].finalProgress = 0
+              Object.keys(calculatedProjects[parID].calculatedProgress.progress).forEach(val => {
+                calculatedProjects[parID].finalProgress += calculatedProjects[parID].calculatedProgress.progress[val]
+              })
+              calculatedProjects[parID].calculatedProgress.counter += 1
+              if(calculatedProjects[parID].parentID){
+                calculate(calculatedProjects, parID)
+              }
+          }
+          parID = null
+      })
+    }
+    console.log(calculatedProjects);
+  }
+
+  //console.log(calculatedProjects["-Nr2k_xUawExwEYKHRON"])
 
   const editProject = useCallback((project) => { //triggered by edit icon
     setUpdatedProject({ name: project.name, progress: project.progress, units: project.units, url: project.url })
@@ -163,3 +211,5 @@ function Home() {
 }
 
 export default Home;
+
+//przeliczanie progresu glownego projektu w opoarciu o srednia subprojektow - zaimplementowac wyswietlanie w oparciu o final progress
