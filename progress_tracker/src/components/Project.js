@@ -27,14 +27,25 @@ export default function Project({id, confirmDeleteProject, editProject, addSubPr
     <div className={"project_data"}> 
       <h2 className="project_name">{project.name}</h2>
       <div className="project_control">
-        <div className="progressBar">
-          {Array.from({length: project.progress}).map((_, index) => (
-            <div className={`completed ${project.parentID ? 'completedSub' : ''}`} key={index}></div>
-          ))}
-          {Array.from({length: project.units - project.progress}).map((_, index) => (
-            <div className="unit" key={index}></div>
-          ))}
-        </div>
+        {project.calculatedProgress.counter > 0 ?
+          <div className="progressBar">
+            {Array.from({length: project.finalProgress/project.calculatedProgress.counter * 100}).map((_, index) => (
+              <div className={`completed ${project.parentID ? 'completedSub' : ''}`} key={index}></div>
+            ))}
+            {Array.from({length: (1 - project.finalProgress/project.calculatedProgress.counter) * 100}).map((_, index) => (
+              <div className="unit" key={index}></div>
+             ))} 
+          </div> 
+          : 
+          <div className="progressBar">
+            {Array.from({length: project.progress}).map((_, index) => (
+              <div className={`completed ${project.parentID ? 'completedSub' : ''}`} key={index}></div>
+            ))}
+            {Array.from({length: project.units - project.progress}).map((_, index) => (
+              <div className="unit" key={index}></div>
+            ))}
+          </div>
+        }
         <FontAwesomeIcon className="icon-edit" icon={faEdit} onClick={() => editProject({id: project.id, name: project.name, progress: project.progress, units: project.units, url: project.url})} />
         <FontAwesomeIcon className="icon-info" icon={faUpRightFromSquare} onClick={() => window.open(`${project.url}`, '_blank')} />
         <FontAwesomeIcon className="icon-delete" icon={faTrashAlt} onClick={() => confirmDeleteProject(project)} />

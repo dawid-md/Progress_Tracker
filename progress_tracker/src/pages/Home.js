@@ -69,7 +69,7 @@ function Home() {
     if(parentID){
       let parID = calculatedProjects[parentID].parentID
       if(calculatedProjects[parID].calculatedProgress.progress[parentID] != undefined){
-        calculatedProjects[parID].calculatedProgress.progress[parentID] = calculatedProjects[parentID].finalProgress
+        calculatedProjects[parID].calculatedProgress.progress[parentID] = calculatedProjects[parentID].finalProgress / calculatedProjects[parentID].calculatedProgress.counter
         calculatedProjects[parID].finalProgress = 0
         Object.keys(calculatedProjects[parID].calculatedProgress.progress).forEach(val => {
           calculatedProjects[parID].finalProgress += calculatedProjects[parID].calculatedProgress.progress[val]
@@ -97,8 +97,6 @@ function Home() {
     }
     console.log(calculatedProjects);
   }
-
-  //console.log(calculatedProjects["-Nr2k_xUawExwEYKHRON"])
 
   const editProject = useCallback((project) => { //triggered by edit icon
     setUpdatedProject({ name: project.name, progress: project.progress, units: project.units, url: project.url })
