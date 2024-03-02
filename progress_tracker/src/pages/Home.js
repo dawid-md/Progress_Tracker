@@ -33,10 +33,10 @@ function Home() {
         const data = snapshot.val()
         //Convert the data into an array of projects
         let userProjectsArray = Object.keys(data).map(key => {
-              return{
-                id: key,
-                ...data[key]
-              }
+          return{
+            id: key,
+            ...data[key]
+          }
         }).filter(item => item !== null) //removing nulls from the array
 
         userProjectsArray = calculateProgress(userProjectsArray)
@@ -55,7 +55,7 @@ function Home() {
   }
 
   const calculateProgress = (userProjectsArray) => {
-    let calculatedProjects = {}
+    const calculatedProjects = {}
     userProjectsArray.forEach(item => {
       item.calculatedProgress = {progress: {}, counter: 0}
       item.finalProgress = item.progress / item.units
@@ -95,7 +95,6 @@ function Home() {
           parID = null
       })
     }
-    console.log(calculatedProjects);
   }
 
   const editProject = useCallback((project) => { //triggered by edit icon
@@ -109,7 +108,6 @@ function Home() {
   }
 
   async function saveProject(project) {
-    console.log(project);
     const db = getDatabase(app);
     let projectsRef;
 
@@ -208,6 +206,4 @@ function Home() {
   );
 }
 
-export default Home;
-
-//przeliczanie progresu glownego projektu w opoarciu o srednia subprojektow - zaimplementowac wyswietlanie w oparciu o final progress
+export default Home
