@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 export default function ModalEdit({ editingProjectId, onConfirm, onCancel , projectData}) {
   const [newProject, setNewProject] = useState({id: editingProjectId, name: projectData.name, progress: projectData.progress,
-     units: projectData.units, url: projectData.url });
+     units: projectData.units, url: projectData.url, hasCalculatedProgress: projectData.hasCalculatedProgress });
 
   useEffect(() => {
     if (editingProjectId) {
@@ -11,12 +11,13 @@ export default function ModalEdit({ editingProjectId, onConfirm, onCancel , proj
         name: projectData.name,
         progress: projectData.progress,
         units: projectData.units,
-        url: projectData.url
+        url: projectData.url,
+        hasCalculatedProgress: projectData.hasCalculatedProgress
       });
     }
   }, [editingProjectId, projectData]);
 
-  if (!editingProjectId) return null;
+  if (!editingProjectId) return null; //why this line is here exactly? need to check (probably to avoid warning that input changes state etc)
 
   return (
     <div className="modal">
@@ -30,20 +31,24 @@ export default function ModalEdit({ editingProjectId, onConfirm, onCancel , proj
             value={newProject.name || ''} 
             onChange={e => setNewProject({ ...newProject, name: e.target.value })}
           />
-          <p className="label">Progress</p>
-          <input 
-            type="number" 
-            placeholder="Progress" 
-            value={newProject.progress || ''} 
-            onChange={e => setNewProject({ ...newProject, progress: e.target.value })}
-          />
-          <p className="label">Units</p>
-          <input 
-            type="number" 
-            placeholder="Units" 
-            value={newProject.units || ''} 
-            onChange={e => setNewProject({ ...newProject, units: e.target.value })}
-          />
+          {!newProject.hasCalculatedProgress ? 
+          <>
+            <p className="label">Progress</p>
+            <input 
+              type="number" 
+              placeholder="Progress" 
+              value={newProject.progress || ''} 
+              onChange={e => setNewProject({ ...newProject, progress: e.target.value })}
+            />
+
+            <p className="label">Units</p>
+            <input 
+              type="number" 
+              placeholder="Units" 
+              value={newProject.units || ''} 
+              onChange={e => setNewProject({ ...newProject, units: e.target.value })}
+            />
+          </> : null }
           <p className="label">URL</p>
           <input 
             type="text" 

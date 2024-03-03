@@ -12,7 +12,7 @@ import ModalDelete from '../components/ModalDelete';
 function Home() {
   const {user} = useContext(AuthContext)
   const [projects, setProjects] = useState([])
-  const [updatedProject, setUpdatedProject] = useState({ name: '', progress: '', units: '', url: '' })
+  const [updatedProject, setUpdatedProject] = useState({ name: '', progress: '', units: '', url: '', hasCalculatedProgress: false })
   const [editingProjectId, setEditingProjectId] = useState(null)
   const [showAddModal, setShowAddModal] = useState(false)
   const [showDeleteModal, setShowDeleteModal] = useState(false)
@@ -99,7 +99,7 @@ function Home() {
   }
 
   const editProject = useCallback((project) => { //triggered by edit icon
-    setUpdatedProject({ name: project.name, progress: project.progress, units: project.units, url: project.url })
+    setUpdatedProject({ name: project.name, progress: project.progress, units: project.units, url: project.url, hasCalculatedProgress: project.hasCalculatedProgress })
     setEditingProjectId(project.id)
   }, [])
 
