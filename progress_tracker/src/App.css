@@ -2,7 +2,7 @@
     --background: #1a1d23;
     --react-color: #61dafb;
     --blue-primary: #0d6efd;
-    --violet-primary: #46b834;
+    --violet-primary: #B233F2;
     --orange--firebase: #FFC209;
     --projects--font--color: #fff;
     --gradient--start: rgba(0,0,0,1);
@@ -125,9 +125,9 @@
     justify-content: space-between;
     width: 1200px; 
     min-width: 330px;
-    height: 25px;
-    border: 1px solid var(--blue-primary);
-    border-radius: 10px;
+    height: 30px;
+    /* border: 1px solid var(--blue-primary); */
+    border-radius: 7px;
     overflow: hidden;
     margin: 5px 0px;
 }
@@ -172,7 +172,7 @@
 .completed{
     flex-grow: 1;
     background-color: var(--blue-primary);
-    border: 1px solid #84b5ff61;
+    /* border: 1px solid #84b5ff61; */
 }
 .completedSub{
     background-color: var(--violet-primary);
@@ -180,7 +180,7 @@
 .unit{
     flex-grow: 1;
     background-color: white;
-    border: 1px solid white;
+    border: 1px solid;
 }
 .modal {
     position: fixed;

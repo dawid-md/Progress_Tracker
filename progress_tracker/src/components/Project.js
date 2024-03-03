@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCirclePlus, faEdit, faTrashAlt, faUpRightFromSquare, faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from "react";
 
-export default function Project({id, confirmDeleteProject, editProject, addSubProject, projects}){
+export default function Project({id, confirmDeleteProject, editProject, addSubProject, projects, expandAll}){
 
   const [project, setProject] = useState(null)
   const [subprojects, setSubprojects] = useState([])
@@ -13,7 +13,8 @@ export default function Project({id, confirmDeleteProject, editProject, addSubPr
     setProject(foundProject)
     const foundSubprojects = projects.filter(project => project.parentID === id)
     setSubprojects(foundSubprojects)
-  }, [id, projects])
+    setIsVisible(expandAll)
+  }, [id, projects, expandAll])
 
   if(!project) {
     return <div>Loading project...</div>
@@ -52,7 +53,7 @@ export default function Project({id, confirmDeleteProject, editProject, addSubPr
         <FontAwesomeIcon className="icon-edit" icon={faCirclePlus} onClick={() => addSubProject(project.id)} />
       </div>
       <FontAwesomeIcon className={`icon-toggle ${subprojects.find(project => project.parentID === id) ? '' : 'hidden'}`} icon={isVisible ? faChevronUp : faChevronDown} onClick={toggleSubprojectsVisibility} />
-      {subprojects && <div className={`subprojects ${!isVisible ? 'hidden' : ''}`}>
+      {subprojects && <div className={`subprojects ${isVisible ? '' : 'hidden'}`}>
         {subprojects.map(subProject => (
           <Project 
             key={subProject.id} 
@@ -61,6 +62,7 @@ export default function Project({id, confirmDeleteProject, editProject, addSubPr
             editProject={editProject}
             confirmDeleteProject={confirmDeleteProject}
             addSubProject={addSubProject}
+            expandAll={expandAll}
           />
         ))}
       </div>}
