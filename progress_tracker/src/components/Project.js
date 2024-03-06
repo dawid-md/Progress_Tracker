@@ -25,7 +25,7 @@ export default function Project({id, confirmDeleteProject, editProject, addSubPr
   }
 
   return(
-    <div className={"project_data"}> 
+    <div className={`project_data ${(project.calculatedProgress.counter === 0 && project.finalProgress === 1) || (project.calculatedProgress.counter > 0 && project.finalProgress/project.calculatedProgress.counter >= 1) ? 'project-completed' : ''}`}> 
       <h2 className="project_name">{project.name}</h2>
       <div className="project_control">
         {project.calculatedProgress.counter > 0 ?

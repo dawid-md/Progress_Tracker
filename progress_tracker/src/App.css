@@ -131,6 +131,9 @@
     overflow: hidden;
     margin: 5px 0px;
 }
+.project-completed{
+    /* display: none; */
+}
 .icon-toggle{
     cursor: pointer;
 }
