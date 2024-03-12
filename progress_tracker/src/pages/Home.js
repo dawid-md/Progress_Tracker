@@ -4,7 +4,7 @@ import Project from '../components/Project';
 import { getDatabase, ref, get, push, remove, update, query, orderByChild, equalTo } from 'firebase/database'
 import { app } from '../config/firebase';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCirclePlus, faSort, faAnglesDown, faAnglesUp } from '@fortawesome/free-solid-svg-icons';
+import { faCirclePlus, faSort, faAnglesDown, faAnglesUp, faToggleOn, faToggleOff } from '@fortawesome/free-solid-svg-icons';
 import ModalAdd from '../components/ModalAdd';
 import ModalEdit from '../components/ModalEdit';
 import ModalDelete from '../components/ModalDelete';
@@ -19,6 +19,7 @@ function Home() {
   const [projectToDelete, setProjectToDelete] = useState(null)
   const [sorting, setSorting] = useState(null)
   const [expandAll, setExpandAll] = useState(false)
+  const [completed, setCompleted] = useState(false)
 
   useEffect(() => {
     user && getProjects()
@@ -174,6 +175,7 @@ function Home() {
         <FontAwesomeIcon className='add-icon' icon={faSort} onClick={() => sortProjects(projects)} />
         {expandAll ? <FontAwesomeIcon className='add-icon' icon={faAnglesUp} onClick={() => setExpandAll(currState => !currState)} /> : 
           <FontAwesomeIcon className='add-icon' icon={faAnglesDown} onClick={() => setExpandAll(currState => !currState)} />}
+        <FontAwesomeIcon className='add-icon' icon={completed ? faToggleOn : faToggleOff} onClick={() => setCompleted(!completed)} />
       </div>
         {projects.map(item => (
           item.parentID === undefined && <Project //first render can only contains items without parentID (parentID is for subprojects)
@@ -184,6 +186,7 @@ function Home() {
             addSubProject={addSubProject}
             projects={projects}
             expandAll={expandAll}
+            completed={completed}
           />
         ))}
         <ModalAdd 

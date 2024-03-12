@@ -4,7 +4,7 @@ import { auth } from "../config/firebase"; // Ensure this path is correct
 import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../App";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
+import { faMoon, faRegular, faCircle } from '@fortawesome/free-solid-svg-icons';
 
 export default function Navbar() {
   const {user} = useContext(AuthContext)
@@ -62,7 +62,7 @@ export default function Navbar() {
                 {user && <div className='nav-link'>Profile</div>} {/* Changed to button */}
                 <Link to={'/about'} className='nav-link'>About</Link>
             </nav>
-          {theme === 'dark' ? <FontAwesomeIcon className="icon-theme" icon={faSun} onClick={() => changeTheme()} /> : 
+          {theme === 'dark' ? <FontAwesomeIcon className="icon-theme" icon={faCircle} onClick={() => changeTheme()} /> : 
                 <FontAwesomeIcon className="icon-theme" icon={faMoon} onClick={() => changeTheme()} />
           }
           </div>

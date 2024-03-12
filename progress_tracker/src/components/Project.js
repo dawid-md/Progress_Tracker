@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCirclePlus, faEdit, faTrashAlt, faUpRightFromSquare, faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from "react";
 
-export default function Project({id, confirmDeleteProject, editProject, addSubProject, projects, expandAll}){
+export default function Project({id, confirmDeleteProject, editProject, addSubProject, projects, expandAll, completed}){
 
   const [project, setProject] = useState(null)
   const [subprojects, setSubprojects] = useState([])
@@ -25,7 +25,7 @@ export default function Project({id, confirmDeleteProject, editProject, addSubPr
   }
 
   return(
-    <div className={`project_data ${(project.calculatedProgress.counter === 0 && project.finalProgress === 1) || (project.calculatedProgress.counter > 0 && project.finalProgress/project.calculatedProgress.counter >= 1) ? 'project-completed' : ''}`}> 
+    <div className={`project_data ${(!completed && !project.parentID && project.calculatedProgress.counter === 0 && project.finalProgress === 1) || (project.calculatedProgress.counter > 0 && project.finalProgress/project.calculatedProgress.counter >= 1) ? 'project-completed' : ''}`}> 
       <h2 className="project_name">{project.name}</h2>
       <div className="project_control">
         {project.calculatedProgress.counter > 0 ?
@@ -63,6 +63,7 @@ export default function Project({id, confirmDeleteProject, editProject, addSubPr
             confirmDeleteProject={confirmDeleteProject}
             addSubProject={addSubProject}
             expandAll={expandAll}
+            completed={completed}
           />
         ))}
       </div>}

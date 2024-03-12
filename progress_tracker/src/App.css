@@ -10,6 +10,14 @@
     --icons--color: #F6F7F9;
     --project--data--background: #1a1d23;  /*#e0e0e0*/
   }
+html {
+    scrollbar-width: none; /* For Firefox */
+    -ms-overflow-style: none; /* For Internet Explorer and Edge */
+}
+
+html::-webkit-scrollbar {
+    width: 0px; /* For Chrome, Safari, and Opera */
+}
 .navbar{
     width: 100%;
     height: 80px;
@@ -80,7 +88,7 @@
     justify-content: center;
     align-items: center;
     padding: 20px;
-    gap: 15px;
+    gap: 30px;
 }
 .icon-theme{
     color: white;
@@ -95,6 +103,7 @@
     display: grid;
     place-items: center;
     padding: 10px;
+    padding-bottom: 100px;
 }
 .App{
     height: 100%;
@@ -132,7 +141,7 @@
     margin: 5px 0px;
 }
 .project-completed{
-    /* display: none; */
+    display: none;
 }
 .icon-toggle{
     cursor: pointer;
