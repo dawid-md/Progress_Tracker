@@ -1,13 +1,13 @@
 import { useState, useEffect, useContext, useCallback } from "react"
-import { AuthContext } from "../App";
-import Project from '../components/Project';
+import { AuthContext } from "../App"
+import Project from '../components/Project'
 import { getDatabase, ref, get, push, remove, update, query, orderByChild, equalTo } from 'firebase/database'
-import { app } from '../config/firebase';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCirclePlus, faSort, faAnglesDown, faAnglesUp, faToggleOn, faToggleOff } from '@fortawesome/free-solid-svg-icons';
-import ModalAdd from '../components/ModalAdd';
-import ModalEdit from '../components/ModalEdit';
-import ModalDelete from '../components/ModalDelete';
+import { app } from '../config/firebase'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCirclePlus, faSort, faAnglesDown, faAnglesUp, faToggleOn, faToggleOff } from '@fortawesome/free-solid-svg-icons'
+import ModalAdd from '../components/ModalAdd'
+import ModalEdit from '../components/ModalEdit'
+import ModalDelete from '../components/ModalDelete'
 
 function Home() {
   const {user} = useContext(AuthContext)

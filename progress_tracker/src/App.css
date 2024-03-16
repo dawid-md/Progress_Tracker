@@ -5,20 +5,26 @@
     --violet-primary: #B233F2;
     --orange--firebase: #FFC209;
     --projects--font--color: #fff;
-    --gradient--start: rgba(0,0,0,1);
-    --gradient--end: rgba(26,29,35,1);
+    --gradient--start: rgba(0, 0, 0, 1);
+    --gradient--end: rgba(26, 29, 35, 1);
     --icons--color: #F6F7F9;
-    --project--data--background: #1a1d23;  /*#e0e0e0*/
-  }
+    --project--data--background: #1a1d23;
+    /*#e0e0e0*/
+}
+
 html {
-    scrollbar-width: none; /* For Firefox */
-    -ms-overflow-style: none; /* For Internet Explorer and Edge */
+    scrollbar-width: none;
+    /* For Firefox */
+    -ms-overflow-style: none;
+    /* For Internet Explorer and Edge */
 }
 
 html::-webkit-scrollbar {
-    width: 0px; /* For Chrome, Safari, and Opera */
+    width: 0px;
+    /* For Chrome, Safari, and Opera */
 }
-.navbar{
+
+.navbar {
     width: 100%;
     height: 80px;
     background: linear-gradient(180deg, var(--gradient--start) 0%, var(--gradient--end) 100%);
@@ -29,36 +35,42 @@ html::-webkit-scrollbar {
     align-items: center;
     gap: 30px;
 }
+
 .logo-title {
     height: 100%;
     display: flex;
     align-items: center;
-    gap: 20px; 
+    gap: 20px;
     font-size: clamp(0.5rem, 0.5rem + 1vw, 1.5rem);
     letter-spacing: 2px;
 }
-.logo{
+
+.logo {
     max-width: 100%;
     max-height: 100%;
     object-fit: cover;
 }
-.nav-username{
+
+.nav-username {
     margin-left: auto;
     position: relative;
     top: -1px;
 }
-.nav-links{
+
+.nav-links {
     display: flex;
     gap: 30px;
     margin-right: 20px;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
 }
-.nav-link{
+
+.nav-link {
     position: relative;
     text-decoration: none;
     color: #ffffff;
 }
-.nav-link::after{
+
+.nav-link::after {
     content: '';
     position: absolute;
     bottom: 0;
@@ -70,69 +82,90 @@ html::-webkit-scrollbar {
     transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
     transform-origin: right center;
 }
-.nav-link:hover::after{
+
+.nav-link:hover::after {
     transform: scaleX(1);
     transform-origin: left center;
     transition-duration: 0.4s;
 }
-.nav-link:hover{
+
+.nav-link:hover {
     cursor: pointer;
 }
 
-.flex-elements{
+.flex-elements {
     display: flex;
     align-items: center;
 }
-.icons{
+
+.icons {
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 20px;
     gap: 30px;
 }
-.icon-theme{
+
+.icon-theme {
     color: white;
     width: 20px;
     height: 20px;
     margin-left: 5px;
 }
-.icon-theme:hover{
+
+.icon-theme:hover {
     cursor: pointer;
 }
-.container{
+
+.container {
     display: grid;
     place-items: center;
     padding: 10px;
     padding-bottom: 100px;
 }
-.App{
+
+.App {
     height: 100%;
 }
-.project_name{
-    color: var(--projects--font--color);
+
+.App-preview {
+    height: 100%;
+    display: grid;
+    place-items: center;
 }
-.project_data{
+
+.project_name {
+    color: var(--projects--font--color);
+    font-weight: 500;
+    font-size: 1.5rem;
+}
+
+.project_data {
     margin-bottom: 15px;
     display: grid;
     grid-template-columns: minmax(400px, auto);
     background-color: var(--project--data--background);
     border-radius: 10px;
 }
-.subprojects{
+
+.subprojects {
     width: 99%;
     margin-left: auto;
 }
-.hidden{
+
+.hidden {
     display: none;
 }
-.project_control{
+
+.project_control {
     display: flex;
     gap: 3px;
 }
-.progressBar{
+
+.progressBar {
     display: flex;
     justify-content: space-between;
-    width: 1200px; 
+    width: 1200px;
     min-width: 330px;
     height: 30px;
     /* border: 1px solid var(--blue-primary); */
@@ -140,60 +173,79 @@ html::-webkit-scrollbar {
     overflow: hidden;
     margin: 5px 0px;
 }
-.project-completed{
+
+.project-completed {
     display: none;
 }
-.icon-toggle{
+
+.icon-toggle {
     cursor: pointer;
 }
-.add-icon, .sort-icon{
+
+.add-icon,
+.sort-icon {
     height: 45px;
     color: var(--icons--color);
 }
-.add-icon:hover, .sort-icon:hover{
+
+.add-icon:hover,
+.sort-icon:hover {
     cursor: pointer;
     color: var(--react-color);
     color: #FFC209;
     transition: color 2s;
 }
-.icon-edit, .icon-delete, .icon-info{
+
+.icon-edit,
+.icon-delete,
+.icon-info {
     height: 25px;
     margin: 4px 0px 0px 10px
 }
-.icon-edit{
+
+.icon-edit {
     color: #4bb2fc;
 }
-.icon-info{
+
+.icon-info {
     color: #f0af4e;
 }
-.icon-delete{
+
+.icon-delete {
     color: #d9534f;
 }
-.icon-edit:hover{
+
+.icon-edit:hover {
     cursor: pointer;
     color: #428aff;
 }
-.icon-info:hover{
+
+.icon-info:hover {
     cursor: pointer;
     color: #d88e1f;
 }
-.icon-delete:hover{
+
+.icon-delete:hover {
     cursor: pointer;
     color: #cc332e;
 }
-.completed{
+
+.completed {
     flex-grow: 1;
     background-color: var(--blue-primary);
     /* border: 1px solid #84b5ff61; */
 }
-.completedSub{
+
+.completedSub {
     background-color: var(--violet-primary);
 }
-.unit{
+
+.unit {
     flex-grow: 1;
-    background-color: white;
+    background-color: whitesmoke;
     border: 1px solid;
 }
+
 .modal {
     position: fixed;
     top: 0;
@@ -205,6 +257,7 @@ html::-webkit-scrollbar {
     align-items: center;
     background-color: rgba(0, 0, 0, 0.3);
 }
+
 .modal-content {
     display: grid;
     width: 500px;
@@ -213,15 +266,18 @@ html::-webkit-scrollbar {
     border: 1px solid var(--react-color);
     border-radius: 10px;
 }
-.modal-label{
+
+.modal-label {
     text-align: center;
 }
-.modal-fields{
+
+.modal-fields {
     margin-top: 10px;
     display: flex;
     flex-direction: column;
 }
-.modal-fields input{
+
+.modal-fields input {
     background-color: #16181d;
     border: 1px solid #16181d;
     color: #ffffff;
@@ -230,6 +286,7 @@ html::-webkit-scrollbar {
     margin-top: 5px;
     margin-bottom: 12px;
 }
+
 .modal-content-buttons {
     flex-grow: 1;
     display: flex;
@@ -238,7 +295,9 @@ html::-webkit-scrollbar {
     gap: 25px;
     margin-top: 15px;
 }
-.confirm-button, .cancel-button{
+
+.confirm-button,
+.cancel-button {
     width: 80px;
     height: 40px;
     font-size: large;
@@ -247,38 +306,46 @@ html::-webkit-scrollbar {
     justify-content: center;
     align-items: center;
 }
-.confirm-button{
+
+.confirm-button {
     background-color: var(--blue-primary);
 }
-.cancel-button{
+
+.cancel-button {
     background-color: #4e545d32;
 }
-.confirm-button:hover, .cancel-button:hover{
+
+.confirm-button:hover,
+.cancel-button:hover {
     cursor: pointer;
     font-weight: 500;
     outline: 1px solid var(--react-color);
 }
 
-.loginDiv{
+.loginDiv {
     display: grid;
     place-items: center;
     margin-top: 30px;
 }
-.loginForm{
+
+.loginForm {
     display: grid;
     margin-top: 35px;
 }
-.loginForm input{
+
+.loginForm input {
     width: 400px;
     height: 45px;
     border: none;
     border-radius: 5px;
     padding: 10px;
 }
-.loginForm input:hover{
+
+.loginForm input:hover {
     outline: 2px solid var(--blue-primary);
 }
-.loginButton{
+
+.loginButton {
     width: 400px;
     height: 45px;
     border: none;
@@ -289,13 +356,15 @@ html::-webkit-scrollbar {
     transition: color 0.5s, background-color 0.2s;
     margin-top: 15px;
 }
-.loginButton:hover{
+
+.loginButton:hover {
     cursor: pointer;
     background-color: var(--orange--firebase);
     color: black;
     transition: color 0.5s, background-color 0.2s;
 }
-.testUserButton{
+
+.testUserButton {
     background-color: var(--orange--firebase);
     width: 400px;
     height: 45px;
@@ -305,9 +374,11 @@ html::-webkit-scrollbar {
     cursor: pointer;
     margin-top: 20px;
 }
-.testUserButton:hover{
+
+.testUserButton:hover {
     background-color: #ffc209;
 }
+
 .error-message {
     min-height: 20px;
     color: red;
@@ -315,27 +386,49 @@ html::-webkit-scrollbar {
     margin-top: 2px;
 }
 
-@media screen and (max-width: 1400px){
-    .container > .project_data{
+@media screen and (max-width: 1400px) {
+    .container>.project_data {
         padding-left: 20px;
         padding-right: 20px;
     }
 }
 
-@media screen and (max-width: 1000px){
-    .navbar{
+@media screen and (max-width: 1000px) {
+    .navbar {
         padding: 20px;
     }
 }
 
-@media screen and (max-width: 800px){
-    .logo{
+@media screen and (max-width: 800px) {
+    .logo {
         display: none;
     }
-    .nav-username{
+
+    .nav-username {
         display: none;
     }
-    .navbar{
+
+    .navbar {
         padding: 10px 10px;
+    }
+}
+
+/* Loading Spinner CSS */
+.loading-spinner {
+    border: 4px solid rgba(0, 0, 0, .1);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border-left-color: #09f;
+    animation: spin 1s ease infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
     }
 }
