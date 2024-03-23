@@ -20,6 +20,7 @@ function Home() {
   const [sorting, setSorting] = useState(null)
   const [expandAll, setExpandAll] = useState(false)
   const [completed, setCompleted] = useState(false)
+  const [expandedProjects, setExpandedProjects] = useState({})
 
   useEffect(() => {
     user && getProjects()
@@ -33,8 +34,7 @@ function Home() {
       const snapshot = await get(projectsRef)
       if (snapshot.exists()) {
         const data = snapshot.val()
-        //Convert the data into an array of projects
-        let userProjectsArray = Object.keys(data).map(key => {
+        let userProjectsArray = Object.keys(data).map(key => {  //Convert the data into an array of projects
           return{
             id: key,
             ...data[key]
@@ -178,7 +178,7 @@ function Home() {
         <FontAwesomeIcon className='add-icon' icon={completed ? faToggleOn : faToggleOff} onClick={() => setCompleted(!completed)} />
       </div>
         {projects.map(item => (
-          item.parentID === undefined && <Project //first render can only contains items without parentID (parentID is for subprojects)
+          item.parentID === undefined && <Project //first render can only contains items without parentID (parentID is for subprojects to use)
             key={item.id}
             id={item.id}
             editProject={editProject}
@@ -187,6 +187,8 @@ function Home() {
             projects={projects}
             expandAll={expandAll}
             completed={completed}
+            expandedProjects={expandedProjects}
+            setExpandedProjects={setExpandedProjects}
           />
         ))}
         <ModalAdd 

@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCirclePlus, faEdit, faTrashAlt, faUpRightFromSquare, faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from "react";
 
-export default function Project({id, confirmDeleteProject, editProject, addSubProject, projects, expandAll, completed}){
+export default function Project({id, confirmDeleteProject, editProject, addSubProject, projects, expandAll, completed, expandedProjects, setExpandedProjects}){
 
   const [project, setProject] = useState(null)
   const [subprojects, setSubprojects] = useState([])
@@ -11,7 +11,7 @@ export default function Project({id, confirmDeleteProject, editProject, addSubPr
   useEffect(() => {
     const foundProject = projects.find(project => project.id === id)
     setProject(foundProject)
-    const foundSubprojects = projects.filter(project => project.parentID === id)
+    const foundSubprojects = projects.filter(subproject => subproject.parentID === id)
     setSubprojects(foundSubprojects)
     setIsVisible(expandAll)
   }, [id, projects, expandAll])
@@ -21,6 +21,15 @@ export default function Project({id, confirmDeleteProject, editProject, addSubPr
   }
 
   const toggleSubprojectsVisibility = () => {
+    setExpandedProjects(expandedProjects => {
+      const newExpandedProjects = {...expandedProjects}
+      if (!isVisible) {
+        newExpandedProjects[id] = 'expanded'
+      } else {
+        delete newExpandedProjects[id]
+      }
+      return newExpandedProjects
+    })
     setIsVisible(!isVisible)
   }
 
@@ -52,8 +61,9 @@ export default function Project({id, confirmDeleteProject, editProject, addSubPr
         <FontAwesomeIcon className="icon-delete" icon={faTrashAlt} onClick={() => confirmDeleteProject(project)} />
         <FontAwesomeIcon className="icon-edit" icon={faCirclePlus} onClick={() => addSubProject(project.id)} />
       </div>
-      <FontAwesomeIcon className={`icon-toggle ${subprojects.find(project => project.parentID === id) ? '' : 'hidden'}`} icon={isVisible ? faChevronUp : faChevronDown} onClick={toggleSubprojectsVisibility} />
-      {subprojects && <div className={`subprojects ${isVisible ? '' : 'hidden'}`}>
+      <FontAwesomeIcon className={`icon-toggle ${subprojects.find(subproject => subproject.parentID === id) ? '' : 'hidden'}`} icon={(isVisible || expandedProjects[id]) ? faChevronUp : faChevronDown} onClick={toggleSubprojectsVisibility} />
+      
+      {subprojects && <div className={`subprojects ${(isVisible || expandedProjects[id]) ? '' : 'hidden'}`}>
         {subprojects.map(subProject => (
           <Project 
             key={subProject.id} 
@@ -64,6 +74,8 @@ export default function Project({id, confirmDeleteProject, editProject, addSubPr
             addSubProject={addSubProject}
             expandAll={expandAll}
             completed={completed}
+            expandedProjects={expandedProjects}
+            setExpandedProjects={setExpandedProjects}
           />
         ))}
       </div>}
