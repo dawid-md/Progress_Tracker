@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCirclePlus, faEdit, faTrashAlt, faUpRightFromSquare, faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from "react";
 
-export default function Project({id, confirmDeleteProject, editProject, addSubProject, projects, expandAll, completed, expandedProjects, setExpandedProjects}){
+export default function Project({id, confirmDeleteProject, editProject, addSubProject, projects, expandAll, setExpandAll, setExpanding, completed, expandedProjects, setExpandedProjects}){
 
   const [project, setProject] = useState(null)
   const [subprojects, setSubprojects] = useState([])
@@ -13,6 +13,18 @@ export default function Project({id, confirmDeleteProject, editProject, addSubPr
     setProject(foundProject)
     const foundSubprojects = projects.filter(subproject => subproject.parentID === id)
     setSubprojects(foundSubprojects)
+    if(foundSubprojects.length > 0 && expandAll){
+      setExpandedProjects(expandedProjects => {
+        const newExpandedProjects = {...expandedProjects}
+        // if (!isVisible) {
+          newExpandedProjects[id] = 'expanded'
+        // } else {
+          // delete newExpandedProjects[id]
+          // if(Object.entries(newExpandedProjects).length === 0 && newExpandedProjects.constructor === Object) setExpandAll(false)
+        // }
+        return newExpandedProjects
+      })
+    }
     setIsVisible(expandAll)
   }, [id, projects, expandAll])
 
@@ -27,6 +39,7 @@ export default function Project({id, confirmDeleteProject, editProject, addSubPr
         newExpandedProjects[id] = 'expanded'
       } else {
         delete newExpandedProjects[id]
+        if(Object.entries(newExpandedProjects).length === 0 && newExpandedProjects.constructor === Object) setExpandAll(false)
       }
       return newExpandedProjects
     })
@@ -73,6 +86,8 @@ export default function Project({id, confirmDeleteProject, editProject, addSubPr
             confirmDeleteProject={confirmDeleteProject}
             addSubProject={addSubProject}
             expandAll={expandAll}
+            setExpandAll={setExpandAll}
+            setExpanding={setExpanding}
             completed={completed}
             expandedProjects={expandedProjects}
             setExpandedProjects={setExpandedProjects}

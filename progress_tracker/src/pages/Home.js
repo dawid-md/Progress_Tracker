@@ -167,14 +167,21 @@ function Home() {
     });
     setProjects(sortedProjects);
   }
+
+  const setExpanding = (id) => {
+    setExpandAll(currState => !currState)
+  }
   
   return (
       <div className="container">
       <div className="icons">
         <FontAwesomeIcon className='add-icon' icon={faCirclePlus} onClick={() => setShowAddModal(!showAddModal)} />
         <FontAwesomeIcon className='add-icon' icon={faSort} onClick={() => sortProjects(projects)} />
-        {expandAll ? <FontAwesomeIcon className='add-icon' icon={faAnglesUp} onClick={() => setExpandAll(currState => !currState)} /> : 
-          <FontAwesomeIcon className='add-icon' icon={faAnglesDown} onClick={() => setExpandAll(currState => !currState)} />}
+        {expandAll ? <FontAwesomeIcon className='add-icon' icon={faAnglesUp} onClick={setExpanding} /> : 
+          <FontAwesomeIcon className='add-icon' icon={faAnglesDown} onClick={() => {
+            setExpandedProjects({}) //Clear expanded projects
+            setExpanding()
+          }} />}
         <FontAwesomeIcon className='add-icon' icon={completed ? faToggleOn : faToggleOff} onClick={() => setCompleted(!completed)} />
       </div>
         {projects.map(item => (
@@ -186,6 +193,7 @@ function Home() {
             addSubProject={addSubProject}
             projects={projects}
             expandAll={expandAll}
+            setExpandAll={setExpandAll}
             completed={completed}
             expandedProjects={expandedProjects}
             setExpandedProjects={setExpandedProjects}
