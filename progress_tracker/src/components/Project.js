@@ -6,7 +6,6 @@ export default function Project({id, confirmDeleteProject, editProject, addSubPr
 
   const [project, setProject] = useState(null)
   const [subprojects, setSubprojects] = useState([])
-  const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {
     const foundProject = projects.find(project => project.id === id)
@@ -16,16 +15,10 @@ export default function Project({id, confirmDeleteProject, editProject, addSubPr
     if(foundSubprojects.length > 0 && expandAll){
       setExpandedProjects(expandedProjects => {
         const newExpandedProjects = {...expandedProjects}
-        // if (!isVisible) {
           newExpandedProjects[id] = 'expanded'
-        // } else {
-          // delete newExpandedProjects[id]
-          // if(Object.entries(newExpandedProjects).length === 0 && newExpandedProjects.constructor === Object) setExpandAll(false)
-        // }
         return newExpandedProjects
       })
     }
-    setIsVisible(expandAll)
   }, [id, projects, expandAll])
 
   if(!project) {
@@ -35,15 +28,17 @@ export default function Project({id, confirmDeleteProject, editProject, addSubPr
   const toggleSubprojectsVisibility = () => {
     setExpandedProjects(expandedProjects => {
       const newExpandedProjects = {...expandedProjects}
-      if (!isVisible) {
+      if (newExpandedProjects[id] !== 'expanded') {
         newExpandedProjects[id] = 'expanded'
       } else {
         delete newExpandedProjects[id]
-        if(Object.entries(newExpandedProjects).length === 0 && newExpandedProjects.constructor === Object) setExpandAll(false)
+        setExpandAll(false)
+        if(Object.entries(newExpandedProjects).length === 0){
+          setExpandedProjects({}) //Clear expanded projects
+        }
       }
       return newExpandedProjects
     })
-    setIsVisible(!isVisible)
   }
 
   return(
@@ -74,9 +69,9 @@ export default function Project({id, confirmDeleteProject, editProject, addSubPr
         <FontAwesomeIcon className="icon-delete" icon={faTrashAlt} onClick={() => confirmDeleteProject(project)} />
         <FontAwesomeIcon className="icon-edit" icon={faCirclePlus} onClick={() => addSubProject(project.id)} />
       </div>
-      <FontAwesomeIcon className={`icon-toggle ${subprojects.find(subproject => subproject.parentID === id) ? '' : 'hidden'}`} icon={(isVisible || expandedProjects[id]) ? faChevronUp : faChevronDown} onClick={toggleSubprojectsVisibility} />
+      <FontAwesomeIcon className={`icon-toggle ${subprojects.find(subproject => subproject.parentID === id) ? '' : 'hidden'}`} icon={(expandedProjects[id]) ? faChevronUp : faChevronDown} onClick={toggleSubprojectsVisibility} />
       
-      {subprojects && <div className={`subprojects ${(isVisible || expandedProjects[id]) ? '' : 'hidden'}`}>
+      {subprojects && <div className={`subprojects ${(expandedProjects[id]) ? '' : 'hidden'}`}>
         {subprojects.map(subProject => (
           <Project 
             key={subProject.id} 

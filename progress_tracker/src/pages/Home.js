@@ -168,8 +168,11 @@ function Home() {
     setProjects(sortedProjects);
   }
 
-  const setExpanding = (id) => {
+  const setExpanding = () => {
     setExpandAll(currState => !currState)
+    if(Object.entries(expandedProjects).length > 0){
+      setExpandedProjects({}) //Clear expanded projects
+    }
   }
   
   return (
@@ -182,7 +185,12 @@ function Home() {
             setExpandedProjects({}) //Clear expanded projects
             setExpanding()
           }} />}
-        <FontAwesomeIcon className='add-icon' icon={completed ? faToggleOn : faToggleOff} onClick={() => setCompleted(!completed)} />
+        <FontAwesomeIcon 
+          className='add-icon' 
+          icon={completed ? faToggleOn : faToggleOff} 
+          onClick={() => setCompleted(!completed)} 
+          title="Show completed projects"
+        />
       </div>
         {projects.map(item => (
           item.parentID === undefined && <Project //first render can only contains items without parentID (parentID is for subprojects to use)

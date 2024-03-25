@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import Navbar from './components/Navbar';
 import { useState, useEffect, useMemo, createContext } from 'react';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import About from './pages/About';
 
 export const AuthContext = createContext()
 
@@ -41,7 +42,8 @@ function App() {
         <Routes>
           <Route path='/' element={!user ? <Navigate to="/login" /> : <Home />}/>
           <Route path='/login' element={user ? <Navigate to="/" /> : <Login />}/>
-          <Route path='/register'element={user ? <Navigate to="/" /> : <Register />}/>
+          <Route path='/register 'element={user ? <Navigate to="/" /> : <Register />}/>
+          <Route path='/about' element={<About />}/>
         </Routes>
       </Router>
       </AuthContext.Provider>

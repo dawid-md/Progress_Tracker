@@ -59,7 +59,7 @@ export default function Navbar() {
                 {!user && <Link to={'/register'} className='nav-link'>Register</Link> }
                 {!user && <Link to={'/login'} className='nav-link'>Login</Link> }
                 {user && <div onClick={handleLogout} className='nav-link'>Logout</div>} {/* Changed to button */}
-                {user && <div className='nav-link'>Profile</div>} {/* Changed to button */}
+                {/* {user && <div className='nav-link'>Profile</div>} Changed to button */}
                 <Link to={'/about'} className='nav-link'>About</Link>
             </nav>
           {theme === 'dark' ? <FontAwesomeIcon className="icon-theme" icon={faCircle} onClick={() => changeTheme()} /> : 
