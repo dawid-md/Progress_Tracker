@@ -2,6 +2,7 @@
     --background: #1a1d23;
     --react-color: #61dafb;
     --blue-primary: #0d6efd;
+    --critical-primary: #dc3545;
     --violet-primary: #B233F2;
     --orange--firebase: #FFC209;
     --projects--font--color: #fff;
@@ -232,12 +233,19 @@ html::-webkit-scrollbar {
 
 .completed {
     flex-grow: 1;
-    background-color: var(--blue-primary);
+    background-color: var(--blue-primary)
     /* border: 1px solid #84b5ff61; */
 }
 
 .completedSub {
-    background-color: var(--violet-primary);
+    background-color: var(--violet-primary)
+}
+
+.border-critical {  /*just for the border of progressbar*/
+    border: 1px solid var(--critical-primary)
+}
+.border-critical .completed {     /*for the completed tiles of progressbar*/
+    background-color: var(--critical-primary)
 }
 
 .unit {

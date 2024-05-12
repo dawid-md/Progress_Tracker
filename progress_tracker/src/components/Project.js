@@ -46,7 +46,7 @@ export default function Project({id, confirmDeleteProject, editProject, addSubPr
       <h2 className="project_name">{project.name}</h2>
       <div className="project_control">
         {project.calculatedProgress.counter > 0 ?
-          <div className="progressBar">
+          <div className={`progressBar ${project.priority > 0 ? 'border-critical' : ''}`}>
             {Array.from({length: project.finalProgress/project.calculatedProgress.counter * 100}).map((_, index) => (
               <div className={`completed ${project.parentID ? 'completedSub' : ''}`} key={index}></div>
             ))}
@@ -55,7 +55,7 @@ export default function Project({id, confirmDeleteProject, editProject, addSubPr
              ))} 
           </div> 
           : 
-          <div className="progressBar">
+          <div className={`progressBar ${project.priority > 0 ? 'border-critical' : ''}`}>
             {Array.from({length: project.progress}).map((_, index) => (
               <div className={`completed ${project.parentID ? 'completedSub' : ''}`} key={index}></div>
             ))}
@@ -64,7 +64,7 @@ export default function Project({id, confirmDeleteProject, editProject, addSubPr
             ))}
           </div>
         }
-        <FontAwesomeIcon className="icon-edit" icon={faEdit} onClick={() => editProject({id: project.id, name: project.name, progress: project.progress, units: project.units, url: project.url, hasCalculatedProgress: subprojects.length > 0})} />
+        <FontAwesomeIcon className="icon-edit" icon={faEdit} onClick={() => editProject({id: project.id, name: project.name, progress: project.progress, units: project.units, url: project.url, priority: project.priority, hasCalculatedProgress: subprojects.length > 0})} />
         <FontAwesomeIcon className="icon-info" icon={faUpRightFromSquare} onClick={() => window.open(`${project.url}`, '_blank')} />
         <FontAwesomeIcon className="icon-delete" icon={faTrashAlt} onClick={() => confirmDeleteProject(project)} />
         <FontAwesomeIcon className="icon-edit" icon={faCirclePlus} onClick={() => addSubProject(project.id)} />

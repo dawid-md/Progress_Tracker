@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 export default function ModalAdd({ isOpen, onConfirm, onCancel, parentID }) {
-  const [newProject, setNewProject] = useState({ name: '', progress: '', units: '', url: '', parentID: parentID })
+  const [newProject, setNewProject] = useState({ name: '', progress: '', units: '', url: '', parentID: parentID, priority: 0})
     
     useEffect(() => {
       setNewProject(currentProject => ({ ...currentProject, parentID }))
@@ -31,6 +31,12 @@ export default function ModalAdd({ isOpen, onConfirm, onCancel, parentID }) {
               placeholder="Units" 
               value={newProject.units} 
               onChange={e => setNewProject({ ...newProject, units: e.target.value })}
+            />
+            <input 
+              type="number" 
+              placeholder="Priority 0 or 1" 
+              // value={newProject.priority} 
+              onChange={e => setNewProject({ ...newProject, priority: e.target.value })}
             />
             <input 
               type="text" 

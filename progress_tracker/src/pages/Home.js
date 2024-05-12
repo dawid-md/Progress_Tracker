@@ -12,7 +12,7 @@ import ModalDelete from '../components/ModalDelete'
 function Home() {
   const {user} = useContext(AuthContext)
   const [projects, setProjects] = useState([])
-  const [updatedProject, setUpdatedProject] = useState({ name: '', progress: '', units: '', url: '', hasCalculatedProgress: false })
+  const [updatedProject, setUpdatedProject] = useState({ name: '', progress: '', units: '', url: '', priority: 0, hasCalculatedProgress: false })
   const [editingProjectId, setEditingProjectId] = useState(null)
   const [showAddModal, setShowAddModal] = useState(false)
   const [showDeleteModal, setShowDeleteModal] = useState(false)
@@ -82,25 +82,25 @@ function Home() {
       }
     } else {
       Object.keys(calculatedProjects).forEach(item => {
-          let parID = calculatedProjects[item].parentID
-          if(parID){
-              calculatedProjects[parID].calculatedProgress.progress[item] = calculatedProjects[item].finalProgress
-              calculatedProjects[parID].finalProgress = 0
-              Object.keys(calculatedProjects[parID].calculatedProgress.progress).forEach(val => {
-                calculatedProjects[parID].finalProgress += calculatedProjects[parID].calculatedProgress.progress[val]
-              })
-              calculatedProjects[parID].calculatedProgress.counter += 1
-              if(calculatedProjects[parID].parentID){
-                calculate(calculatedProjects, parID)
-              }
-          }
-          parID = null
+        let parID = calculatedProjects[item].parentID
+        if(parID){
+            calculatedProjects[parID].calculatedProgress.progress[item] = calculatedProjects[item].finalProgress
+            calculatedProjects[parID].finalProgress = 0
+            Object.keys(calculatedProjects[parID].calculatedProgress.progress).forEach(val => {
+              calculatedProjects[parID].finalProgress += calculatedProjects[parID].calculatedProgress.progress[val]
+            })
+            calculatedProjects[parID].calculatedProgress.counter += 1
+            if(calculatedProjects[parID].parentID){
+              calculate(calculatedProjects, parID)
+            }
+        }
+        parID = null
       })
     }
   }
 
   const editProject = useCallback((project) => { //triggered by edit icon
-    setUpdatedProject({ name: project.name, progress: project.progress, units: project.units, url: project.url, hasCalculatedProgress: project.hasCalculatedProgress })
+    setUpdatedProject({ name: project.name, progress: project.progress, units: project.units, url: project.url, priority: project.priority, hasCalculatedProgress: project.hasCalculatedProgress })
     setEditingProjectId(project.id)
   }, [])
 
@@ -131,7 +131,7 @@ function Home() {
         console.log(error);
       }
     }
-    setUpdatedProject({ name: '', progress: '', units: '', url: '' }); //Reset input fields after saving
+    setUpdatedProject({ name: '', progress: '', units: '', url: '', priority: 0 }); //Reset input fields after saving
     setEditingProjectId(null); //Reset editing ID
     setShowAddModal(false); //Hide input fields
     getProjects(); //Refresh list of projects

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 export default function ModalEdit({ editingProjectId, onConfirm, onCancel , projectData}) {
   const [newProject, setNewProject] = useState({id: editingProjectId, name: projectData.name, progress: projectData.progress,
-     units: projectData.units, url: projectData.url, hasCalculatedProgress: projectData.hasCalculatedProgress });
+     units: projectData.units, priority: projectData.priority, url: projectData.url, hasCalculatedProgress: projectData.hasCalculatedProgress });
 
   useEffect(() => {
     if (editingProjectId) {
@@ -11,6 +11,7 @@ export default function ModalEdit({ editingProjectId, onConfirm, onCancel , proj
         name: projectData.name,
         progress: projectData.progress,
         units: projectData.units,
+        priority: projectData.priority,
         url: projectData.url,
         hasCalculatedProgress: projectData.hasCalculatedProgress
       });
@@ -40,7 +41,6 @@ export default function ModalEdit({ editingProjectId, onConfirm, onCancel , proj
               value={newProject.progress || ''} 
               onChange={e => setNewProject({ ...newProject, progress: e.target.value })}
             />
-
             <p className="label">Units</p>
             <input 
               type="number" 
@@ -49,6 +49,13 @@ export default function ModalEdit({ editingProjectId, onConfirm, onCancel , proj
               onChange={e => setNewProject({ ...newProject, units: e.target.value })}
             />
           </> : null }
+          <p className="label">Priority</p>
+          <input 
+              type="number" 
+              placeholder="0 or 1" 
+              value={newProject.priority || ''} 
+              onChange={e => setNewProject({ ...newProject, priority: e.target.value })}
+          />
           <p className="label">URL</p>
           <input 
             type="text" 
