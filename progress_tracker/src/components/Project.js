@@ -40,6 +40,7 @@ export default function Project({id, confirmDeleteProject, editProject, addSubPr
       return newExpandedProjects
     })
   }
+  //here we can add the subprojects
 
   return(
     <div className={`project_data ${(!completed && !project.parentID && project.calculatedProgress.counter === 0 && project.finalProgress === 1) || (project.calculatedProgress.counter > 0 && project.finalProgress/project.calculatedProgress.counter >= 1) ? 'project-completed' : ''}`}> 
